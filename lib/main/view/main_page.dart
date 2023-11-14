@@ -1,4 +1,5 @@
 import 'package:cloverlotto/main/controller/main_controller.dart';
+import 'package:cloverlotto/random/view/random_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -132,7 +133,8 @@ class MainPage extends GetView<MainController>{
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Obx(() =>
-                          Text(_controller.numbers.value?.returnValue??'nodata')),
+                          Text('${_controller.numbers.value!.returnValue??'nodata'}+${_controller.num}+${_controller.s}')
+                      ),
                       Text('---- 회 당첨 번호',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
                       Text(getToday()),
                       Row(
@@ -174,7 +176,9 @@ class MainPage extends GetView<MainController>{
                             SizedBox(width: 16.0), // 왼쪽 간격 추가
                             Flexible(
                               flex: 1,
-                              child: ElevatedButton(onPressed: (){},
+                              child: ElevatedButton(onPressed: (){
+                                _controller.updated();
+                              },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
@@ -221,13 +225,15 @@ class MainPage extends GetView<MainController>{
                       physics: NeverScrollableScrollPhysics(), // to disable GridView's scrolling
                       shrinkWrap: true, // You won't see infinite size error
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                      itemBuilder: (BuildContext context, int idex){
+                      itemBuilder: (BuildContext context, int index){
                         return GestureDetector(
                           onTap: (){
-
-                            print('HBS::: $idex');
+                            if (index==3){
+                              Get.to(()=> RandomPage());
+                            }
+                            print('HBS::: $index');
                           },
-                          child: myMenu(idex),
+                          child: myMenu(index),
                         );
                       },
                       itemCount: cardText.length,),

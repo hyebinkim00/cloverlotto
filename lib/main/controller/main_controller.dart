@@ -9,7 +9,12 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class MainController extends GetxController{
 
-  Rx<loto?> numbers = Rx<loto?>(loto());
+  // Rx<loto?> numbers = Rx<loto?>(loto()).obs;
+  var s  = 0.obs;
+  // RxInt 는 비동기 처리 하겟다는 뜻, obs 는 observer역할을 하겟다 뜻
+ final numbers= loto().obs;
+ RxInt num = 0 .obs;
+
 
   @override
   void onInit() {
@@ -43,7 +48,6 @@ class MainController extends GetxController{
       responseBody: true
     );
 
-    
     try {
 
       final dio = Dio(BaseOptions(
@@ -70,6 +74,14 @@ class MainController extends GetxController{
         }
       }
     }
-    
   }
+
+  void updated(){
+    // numbers.update((val) {
+    //   val?.returnValue = 'hbhb';});
+    numbers.value?.returnValue = 'update';
+    s++;
+    num++;
+  }
+
 }
