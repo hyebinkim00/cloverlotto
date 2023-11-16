@@ -135,12 +135,15 @@ class MainPage extends GetView<MainController>{
                       Obx(() =>
                           Text('${_controller.numbers.value!.returnValue??'nodata'}+${_controller.num}+${_controller.s}')
                       ),
-                      Text('---- 회 당첨 번호',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                      Obx(() => Text('${_controller.kk}회 당첨 번호',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                      ),
                       Text(getToday()),
-                      Row(
+                      Obx(() => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: List.generate(8, (index) {
-                          String numbers = test[index].toString();
+
+                          String numbers = _controller.ll[index].toString();
+                          print(numbers);
                           if(index==6){numbers='+';}
                           //     1번부터 10번까지는 노란색입니다.
                           // 11번 부터 20번까지는 파란색입니다.
@@ -148,7 +151,7 @@ class MainPage extends GetView<MainController>{
                           // 31번부터 40번까지는 검은색입니다.
                           // 41번부터 45번까지는 초록색입니다.
                           Color back = Colors.lightGreen;
-                          if(test[index]~/10==1){
+                          if(_controller.ll[index]~/10==1){
                             back= Colors.red;
                           }
                           return Expanded(
@@ -161,16 +164,16 @@ class MainPage extends GetView<MainController>{
                                 color: back,
                               ),
                               child: Center(
-                                child:
-                                Text(numbers,
-                                  style: TextStyle(
-                                    color: Colors.white, // 텍스트 색상 설정
-                                    fontSize: 24.0, // 텍스트 크기 설정
-                                  ),)),
+                                  child:
+                                  Text(numbers,
+                                    style: TextStyle(
+                                      color: Colors.white, // 텍스트 색상 설정
+                                      fontSize: 24.0, // 텍스트 크기 설정
+                                    ),)),
                             ),
                           );
                         }),
-                      ),
+                      )),
                       Row(
                           children: [
                             SizedBox(width: 16.0), // 왼쪽 간격 추가
@@ -249,10 +252,11 @@ class MainPage extends GetView<MainController>{
   Widget myMenu(int index) {
     return Container(
       child: Card(
+        color: Colors.lightGreen,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         shadowColor: Colors.black12,
         child: Center(
-          child: Text(cardText[index]),
+          child: Text('${cardText[index]}',style: TextStyle(color:Colors.white)),
         ),),
       // width: 100.0, // 네모박스의 가로 크기
       // height: 100.0, // 네모박스의 세로 크기
