@@ -31,6 +31,9 @@ class MainPage extends GetView<MainController>{
   }
 
 
+  // Main -> 당첨번호 확인 (QR / 직접입력) , 번호추천 (랜덤  , MBTI , 운세) , 기록 (당첨확인 목록, 번호추천 목록)
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

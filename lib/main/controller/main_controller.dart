@@ -75,6 +75,7 @@ class MainController extends GetxController{
       final client = RestClient(dio);
       loto response = await client.getTasks('getLottoNumber', dd);
       numbers.value = response;
+      ll.clear();
       ll.addAll([response.drwtNo1??0,response.drwtNo2??0,response.drwtNo3??0,response.drwtNo4??0,response.drwtNo5??0,response.drwtNo6??0,0,response.bnusNo??0]);
       print(response.returnValue??"g");
       // final loto lottoResult = loto.fromJson(response);
