@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: RouteNames.SELF,
+      initialRoute: RouteNames.SCAN,
       getPages: Constants.APP_PAGES,
     );
         },
