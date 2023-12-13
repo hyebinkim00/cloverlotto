@@ -1,4 +1,3 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:cloverlotto/config/constants.dart';
 import 'package:cloverlotto/config/route_names.dart';
 import 'package:cloverlotto/main/view/main_page.dart';

@@ -6,6 +6,7 @@ import 'package:cloverlotto/retrofit/retrofit_client.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:html/parser.dart' as htmlParser;
 import 'package:cp949_codec/cp949_codec.dart';
@@ -21,7 +22,6 @@ class MainController extends GetxController{
  RxInt num = 0 .obs;
  RxString kk ='s'.obs;
 
-
   @override
   void onInit() {
     // TODO: implement onInit
@@ -30,6 +30,13 @@ class MainController extends GetxController{
     getLastNo();
     // retro();
   }
+
+  String getDate(){
+    DateTime dateTime = DateTime.now();
+    DateFormat dateFormat = DateFormat('yyyy년 MM월 dd일');
+    return dateFormat.format(dateTime);
+  }
+
 
   // 1. 마지막 회차 정보 가져오기
   void getLastNo() async {
@@ -73,11 +80,15 @@ class MainController extends GetxController{
       dio.interceptors.add(logger);
 
       final client = RestClient(dio);
-      loto response = await client.getTasks('getLottoNumber', dd);
-      numbers.value = response;
-      ll.clear();
-      ll.addAll([response.drwtNo1??0,response.drwtNo2??0,response.drwtNo3??0,response.drwtNo4??0,response.drwtNo5??0,response.drwtNo6??0,0,response.bnusNo??0]);
-      print(response.returnValue??"g");
+      client.getTasks('getLottoNumber', dd).then((value){
+        // loto response = await client.getTasks('getLottoNumber', dd);
+        numbers.value = value;
+        ll.clear();
+        ll.addAll([value.drwtNo1??0,value.drwtNo2??0,value.drwtNo3??0,value.drwtNo4??0,value.drwtNo5??0,value.drwtNo6??0,0,value.bnusNo??0]);
+        print(value.returnValue??"g");
+      }).onError((error, stackTrace){
+
+      });
       // final loto lottoResult = loto.fromJson(response);
       // print(lottoResult.returnValue?? 'no');
       

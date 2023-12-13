@@ -33,7 +33,7 @@ dependencies:
   get: ^4.6.5
   flutter_screenutil: ^5.5.4
   intl: ^0.17.0
-  http: ^1.1.0
+  http: ^0.13.6
   retrofit: ">=3.0.0 <4.0.0"
   json_annotation: ^4.8.1
   pretty_dio_logger: ^1.1.1
@@ -56,8 +56,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  build_runner: ^2.4.6
-  json_serializable: ^6.7.1
+  build_runner: ^2.3.3
+  json_serializable: ^6.6.2
   retrofit_generator: ">=4.0.0 <5.0.0"
 
 # For information on the generic Dart part of this file, see the

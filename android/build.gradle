@@ -26,10 +26,7 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-<<<<<<< HEAD
 tasks.register("clean", Delete) {
-=======
-task clean(type: Delete) {
->>>>>>> 1f33c3b (pro)
+
     delete rootProject.buildDir
 }

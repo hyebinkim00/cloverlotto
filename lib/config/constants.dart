@@ -13,6 +13,8 @@ class Constants{
         name: RouteNames.MAIN,
         page: ()=> MainPage(),
         binding: MainBinding(),
+        transitionDuration: Duration (milliseconds: 500)
+
     ),
     GetPage(
       name: RouteNames.RANDOM,
