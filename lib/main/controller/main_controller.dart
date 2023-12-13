@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloverlotto/model/loto.dart';
 import 'package:cloverlotto/retrofit/retrofit_client.dart';
+import 'package:cloverlotto/sqllite/db.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
@@ -27,8 +28,8 @@ class MainController extends GetxController{
     // TODO: implement onInit
     super.onInit();
     // numbersList();
-    getLastNo();
     // retro();
+    getLastNo();
   }
 
   // 1. 마지막 회차 정보 가져오기
@@ -37,10 +38,9 @@ class MainController extends GetxController{
     // http.Response response = await http.get(url,headers:{ 'Content-Type': 'text/html; charset=EUC-KR', 'Accept-Charset': 'EUC-KR,*;q=0.8',}); /*charset=UTF-8*/
     final response = await http.get(Uri.parse('https://dhlottery.co.kr/gameResult.do?method=byWin'));
 
-
     if (response.bodyBytes.isEmpty) {
       print('응답이 비어 있습니다.');
-      return;
+      return ;
     }
 
     final decodedBody = latin1.decode(response.bodyBytes);
@@ -55,7 +55,10 @@ class MainController extends GetxController{
 
     String dd = latest.replaceAll('회', '');
     int ddd = int.parse(dd);
-    retro(ddd);
+    print('HHHHH'+'$ddd'+dd);
+    
+    DBHelper().insertNumber(dd);
+    // retro(ddd);
   }
 
   Future<void> retro(int dd) async{

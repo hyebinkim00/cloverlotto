@@ -1,11 +1,14 @@
 import 'package:cloverlotto/main/controller/main_controller.dart';
 import 'package:cloverlotto/random/view/random_page.dart';
+import 'package:cloverlotto/self/view/self_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+
+import '../../config/route_names.dart';
 
 
 // Container(
@@ -183,7 +186,7 @@ class MainPage extends GetView<MainController>{
                             Flexible(
                               flex: 1,
                               child: ElevatedButton(onPressed: (){
-                                _controller.updated();
+                                Get.toNamed(RouteNames.SELF);
                               },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
