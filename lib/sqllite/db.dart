@@ -1,6 +1,8 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../model/loto.dart';
+
 class DBHelper {
   static final DBHelper _instance = DBHelper._(); // DBHelper의 싱글톤 객체 생성
   static Database? _database; // 데이터베이스 인스턴스를 저장하는 변수
@@ -40,10 +42,12 @@ class DBHelper {
         await db.execute(
           "CREATE TABLE latest(serial TEXT)",
         );
+        await db.execute(
+          "CREATE TABLE Lotos(id INTEGER PRIMARY KEY, drwNoDate TEXT, drwtNo1 INTEGER, drwtNo2 INTEGER, drwtNo3 INTEGER, drwtNo4 INTEGER, drwtNo5 INTEGER, drwtNo6 INTEGER, bnusNo INTEGER)",
+        );
       },
     );
   }
-
 
   // 데이터 추가 메소드
   Future<void> insertData(String name, int value) async {
@@ -57,23 +61,29 @@ class DBHelper {
       conflictAlgorithm: ConflictAlgorithm.replace, // 중복 데이터 처리 방법 설정
     );
   }
+
   // 데이터 추가 메소드
   Future<void> insertDataList(List<int> selfNum) async {
     final db = await database; // 데이터베이스 인스턴스 가져오기
-      print('HB_INSERT___$selfNum');
-      await db.insert(
-        'selfNum', // 데이터를 추가할 테이블 이름
-        {
-          'value1': selfNum[0], 'value2': selfNum[1] , 'value3': selfNum[2], 'value4': selfNum[3], 'value5': selfNum[4], 'value6': selfNum[5]
-        }, // 추가할 데이터
-        conflictAlgorithm: ConflictAlgorithm.replace, // 중복 데이터 처리 방법 설정
-      );
+    print('HB_INSERT___$selfNum');
+    await db.insert(
+      'selfNum', // 데이터를 추가할 테이블 이름
+      {
+        'value1': selfNum[0],
+        'value2': selfNum[1],
+        'value3': selfNum[2],
+        'value4': selfNum[3],
+        'value5': selfNum[4],
+        'value6': selfNum[5]
+      }, // 추가할 데이터
+      conflictAlgorithm: ConflictAlgorithm.replace, // 중복 데이터 처리 방법 설정
+    );
   }
 
   Future<void> insertNumberListString(List<int> numbers) async {
     final db = await database; // 데이터베이스 인스턴스 가져오기
     final String numbersString = numbers.join(',');
-    print('HBBBB'+numbersString);
+    print('HBBBB' + numbersString);
     await db.insert(
       'numbers',
       {'valueList': numbersString},
@@ -90,6 +100,25 @@ class DBHelper {
       {'serial': serial},
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+  }
+
+
+  Future addLoto(Loto loto) async {
+    final db = await database;
+
+    await db.insert('Lotos', loto.toMap());
+  }
+
+  
+  Future<List<Loto>> getLoto() async{
+    List<Loto> lists = [];
+    final db = await database; // 데이터베이스 인스턴스 가져오기
+    List<Map<String, dynamic>> maps =  await db.query('Lotos');
+    for(var map in maps) {
+      lists.add(Loto.fromMap(map));
+    }
+    print('DDDDD'+lists[0].drwNoDate.toString());
+    return lists;
   }
 
   // 데이터 조회 메소드
@@ -110,6 +139,8 @@ class DBHelper {
       return numbersString.split(',').map((e) => int.parse(e)).toList();
     }).toList();
   }
+  
+  
 
   // 데이터 수정 메소드
   Future<void> updateData(int id, String name, int value) async {
@@ -124,6 +155,7 @@ class DBHelper {
       whereArgs: [id], // 수정할 데이터의 조건 값
     );
   }
+
   // 데이터 삭제 메소드
   Future<void> deleteData(int id) async {
     final db = await database; // 데이터베이스 인스턴스 가져오기

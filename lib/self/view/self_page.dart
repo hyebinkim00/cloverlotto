@@ -101,6 +101,11 @@ class SelfPage extends GetView<SelfController> {
                   controller.saveList();
                 },
                 child: Text('저장하기')),
+            TextButton(
+                onPressed: () {
+                  controller.saveList();
+                },
+                child: Text('확인하기')),
            // Obx(() => Text('${controller.dblist}'))
           ],
         ),
