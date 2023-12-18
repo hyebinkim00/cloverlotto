@@ -72,6 +72,7 @@ class Loto {
 Map<String, dynamic> toMap(){
     return {
       'drwNoDate' : drwNoDate,
+      'drwNo' : drwNo,
       'drwtNo1' : drwtNo1,
       'drwtNo2' : drwtNo2,
       'drwtNo3' : drwtNo3,

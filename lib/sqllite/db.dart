@@ -1,3 +1,4 @@
+import 'package:cloverlotto/model/selfnum.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -34,16 +35,10 @@ class DBHelper {
         );
         await db.execute(
           // SQL 쿼리를 실행하여 데이터베이스 테이블 생성
-          'CREATE TABLE selfNum(id INTEGER PRIMARY KEY, value1 INTEGER, value2 INTEGER, value3 INTEGER, value4 INTEGER, value5 INTEGER, value6 INTEGER)',
+          'CREATE TABLE selfNum(id INTEGER PRIMARY KEY, serial INTEGER, num1 INTEGER, num2 INTEGER, num3 INTEGER, num4 INTEGER, num5 INTEGER, num6 INTEGER)',
         );
         await db.execute(
-          "CREATE TABLE numbers(id INTEGER PRIMARY KEY, valueList TEXT)",
-        );
-        await db.execute(
-          "CREATE TABLE latest(serial TEXT)",
-        );
-        await db.execute(
-          "CREATE TABLE Lotos(id INTEGER PRIMARY KEY, drwNoDate TEXT, drwtNo1 INTEGER, drwtNo2 INTEGER, drwtNo3 INTEGER, drwtNo4 INTEGER, drwtNo5 INTEGER, drwtNo6 INTEGER, bnusNo INTEGER)",
+          "CREATE TABLE Lotos(id INTEGER PRIMARY KEY, drwNoDate TEXT,drwNo INTEGER, drwtNo1 INTEGER, drwtNo2 INTEGER, drwtNo3 INTEGER, drwtNo4 INTEGER, drwtNo5 INTEGER, drwtNo6 INTEGER, bnusNo INTEGER)",
         );
       },
     );
@@ -63,22 +58,26 @@ class DBHelper {
   }
 
   // 데이터 추가 메소드
-  Future<void> insertDataList(List<int> selfNum) async {
+  Future<void> insertDataList(selfNum list) async {
     final db = await database; // 데이터베이스 인스턴스 가져오기
-    print('HB_INSERT___$selfNum');
     await db.insert(
-      'selfNum', // 데이터를 추가할 테이블 이름
-      {
-        'value1': selfNum[0],
-        'value2': selfNum[1],
-        'value3': selfNum[2],
-        'value4': selfNum[3],
-        'value5': selfNum[4],
-        'value6': selfNum[5]
-      }, // 추가할 데이터
+      'selfNum',
+      list.toMap(), // 추가할 데이터
       conflictAlgorithm: ConflictAlgorithm.replace, // 중복 데이터 처리 방법 설정
     );
   }
+
+  Future<List<selfNum>> getselfList() async{
+    List<selfNum> lists = [];
+    final db = await database; // 데이터베이스 인스턴스 가져오기
+    List<Map<String, dynamic>> maps =  await db.query('selfNum');
+    for(var map in maps) {
+      lists.add(selfNum.fromMap(map));
+    }
+    print(lists[0].toString());
+    return lists;
+  }
+
 
   Future<void> insertNumberListString(List<int> numbers) async {
     final db = await database; // 데이터베이스 인스턴스 가져오기
@@ -92,20 +91,8 @@ class DBHelper {
   }
 
 
-  Future<void> insertNumber(String serial) async {
-    final db = await database; // 데이터베이스 인스턴스 가져오기
-
-    await db.insert(
-      'latest',
-      {'serial': serial},
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-
   Future addLoto(Loto loto) async {
     final db = await database;
-
     await db.insert('Lotos', loto.toMap());
   }
 
@@ -117,7 +104,7 @@ class DBHelper {
     for(var map in maps) {
       lists.add(Loto.fromMap(map));
     }
-    print('DDDDD'+lists[0].drwNoDate.toString());
+    print('DDDDD'+lists[0].drwNo.toString());
     return lists;
   }
 
@@ -139,22 +126,17 @@ class DBHelper {
       return numbersString.split(',').map((e) => int.parse(e)).toList();
     }).toList();
   }
-  
-  
 
-  // 데이터 수정 메소드
-  Future<void> updateData(int id, String name, int value) async {
-    final db = await database; // 데이터베이스 인스턴스 가져오기
-    await db.update(
-      'example', // 수정할 테이블 이름
-      {
-        'name': name,
-        'value': value,
-      }, // 수정할 데이터
-      where: 'id = ?', // 수정할 데이터의 조건 설정
-      whereArgs: [id], // 수정할 데이터의 조건 값
+  Future<List<Map<String, dynamic>>> queryByColumn2Value(int targetValue) async {
+    Database dbClient = await database;
+    return await dbClient.query(
+      'Lotos',
+      where: 'drwNo = ?',
+      whereArgs: [targetValue],
     );
   }
+
+
 
   // 데이터 삭제 메소드
   Future<void> deleteData(int id) async {

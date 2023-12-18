@@ -88,7 +88,6 @@ class MainController extends GetxController {
       ]);
       print(response.returnValue ?? "g");
 
-      List<Loto> dg = await DBHelper().getLoto();
 
       // final loto lottoResult = loto.fromJson(response);
       // print(lottoResult.returnValue?? 'no');
