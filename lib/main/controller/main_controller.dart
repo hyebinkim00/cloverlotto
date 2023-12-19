@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloverlotto/db/dbhelper.dart';
 import 'package:cloverlotto/model/loto.dart';
 import 'package:cloverlotto/retrofit/retrofit_client.dart';
 import 'package:get/get.dart';
@@ -15,12 +16,11 @@ class MainController extends GetxController{
   // Rx<loto?> numbers = Rx<loto?>(loto()).obs;
   var s  = 0.obs;
   // RxInt 는 비동기 처리 하겟다는 뜻, obs 는 observer역할을 하겟다 뜻
- final numbers= loto().obs;
+ final numbers= Loto().obs;
  RxList<int> ll = [0,0,0,0,0,0,0,0].obs;
  RxInt num = 0 .obs;
- RxString kk ='s'.obs;
+ RxInt lastSerial = 0.obs;
  var today;
-
 
   @override
   void onInit() {
@@ -36,34 +36,62 @@ class MainController extends GetxController{
     return today;
   }
 
+  // 1. 마지막 회차 정보 가져오기 -- 저장 해야됨
+  // MainPage -- > 마지막 회차 정보 확인 => 바꼇으면 맨 앞에 추가 , 처음에는 10개 추가
 
-  // 1. 마지막 회차 정보 가져오기 -- 저장 해야됨 !
   void getLastNo() async {
     // var url = Uri.parse('https://dhlottery.co.kr/gameResult.do?method=byWin&wiselog=C_A_1_1');
     // http.Response response = await http.get(url,headers:{ 'Content-Type': 'text/html; charset=EUC-KR', 'Accept-Charset': 'EUC-KR,*;q=0.8',}); /*charset=UTF-8*/
     final response = await http.get(Uri.parse('https://dhlottery.co.kr/gameResult.do?method=byWin'));
-
 
     if (response.bodyBytes.isEmpty) {
       print('응답이 비어 있습니다.');
       return;
     }
 
-    final decodedBody = latin1.decode(response.bodyBytes);
-
     // 응답이 euc-kr 로 와서 한글이 깨짐 -> cp949 디코딩
     final document = htmlParser.parse(cp949.decodeString(response.body));
-
     final element = document.querySelector('.win_result strong');
-    kk.value= element?.text?? '';
+   // lastSerial.value= element?.text ?? '';
+    String latestText = element!.text;
 
-    String latest = element?.text??'g';
-
-    String dd = latest.replaceAll('회', '');
-    int ddd = int.parse(dd);
-    retro(ddd);
+    String se = latestText.replaceAll('회', '');
+    int seral = int.parse(se);
+    lastSerial.value = seral;
+    retro(seral);
+    updateList(seral);
   }
 
+  // DB 에 저장
+  Future <void> updateList(int serial) async {
+    List<Loto> list = [];
+    // 저장되어 있는 값 확인
+    list = await DBHelper().getLoto();
+    if (list.isEmpty){
+      for (int i = 20; i>=0;i--){
+        // 20개 저장 (마지막 회차가 변경되어서 db 추가할때 id 순서를 바꿀수 없으니 내림차순으로 저장)
+        print('hhhh__$serial');
+        await listDbsave(serial-i);
+      }
+    } else{
+      // 최신 번호 바귀면 한개 저장
+    }
+  }
+
+  // 한개씩 DB에 저장
+  Future<void> listDbsave(int serial) async{
+
+    final dio = Dio(BaseOptions(
+      responseType: ResponseType.plain, // 이 부분을 수정
+    ));
+
+    final client = RestClient(dio);
+    Loto response = await client.getTasks('getLottoNumber', serial);
+    await DBHelper().addLoto(response);
+
+  }
+
+  // 회차별 정보 가져와서 저장하기
   Future<void> retro(int dd) async{
 
     final logger = PrettyDioLogger(
@@ -79,7 +107,7 @@ class MainController extends GetxController{
       dio.interceptors.add(logger);
 
       final client = RestClient(dio);
-      loto response = await client.getTasks('getLottoNumber', dd);
+      Loto response = await client.getTasks('getLottoNumber', dd);
       numbers.value = response;
       ll.clear();
       ll.addAll([response.drwtNo1??0,response.drwtNo2??0,response.drwtNo3??0,response.drwtNo4??0,response.drwtNo5??0,response.drwtNo6??0,0,response.bnusNo??0]);
@@ -103,7 +131,7 @@ class MainController extends GetxController{
 
 
 
-
+//테스트용
   Future<void> numbersList(int numss) async{
     try {
       var url = Uri.parse(
@@ -111,7 +139,7 @@ class MainController extends GetxController{
       http.Response response = await http.get(url);
       if (response.statusCode == 200){
         var json = jsonDecode(response.body);
-        loto lotos = loto.fromJson(json);
+        Loto lotos = Loto.fromJson(json);
         numbers.value = lotos;
       }
     } catch(e){

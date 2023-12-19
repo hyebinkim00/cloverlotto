@@ -1,4 +1,4 @@
-class loto {
+class Loto {
   int? totSellamnt;
   String? returnValue;
   String? drwNoDate;
@@ -14,7 +14,8 @@ class loto {
   int? drwtNo3;
   int? drwtNo1;
 
-  loto(
+
+  Loto(
       {this.totSellamnt,
         this.returnValue,
         this.drwNoDate,
@@ -32,7 +33,7 @@ class loto {
 
   // loto();
 
-  loto.fromJson(Map<String, dynamic> json) {
+  Loto.fromJson(Map<String, dynamic> json) {
     totSellamnt = json['totSellamnt'];
     returnValue = json['returnValue'];
     drwNoDate = json['drwNoDate'];
@@ -67,4 +68,32 @@ class loto {
     data['drwtNo1'] = this.drwtNo1;
     return data;
   }
+
+  //DB 저장
+  Map<String, dynamic> toMap(){
+    return {
+      'drwNoDate' : drwNoDate,
+      'drwNo': drwNo,
+      'drwtNo1' : drwtNo1,
+      'drwtNo2' : drwtNo2,
+      'drwtNo3' : drwtNo3,
+      'drwtNo4' : drwtNo4,
+      'drwtNo5' : drwtNo5,
+      'drwtNo6' : drwtNo6,
+      'bnusNo' : bnusNo
+    };
+  }
+
+  Loto.fromMap(Map<dynamic , dynamic> map){
+    drwNoDate = map?['drwNoDate'];
+    drwNo = map?['drwNo'];
+    drwtNo1 = map?['drwtNo1'];
+    drwtNo2 = map?['drwtNo2'];
+    drwtNo3 = map?['drwtNo3'];
+    drwtNo4 = map?['drwtNo4'];
+    drwtNo5 = map?['drwtNo5'];
+    drwtNo6 = map?['drwtNo6'];
+    bnusNo = map?['bnusNo'];
+  }
+
 }

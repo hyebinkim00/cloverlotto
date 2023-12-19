@@ -15,5 +15,5 @@ abstract class RestClient {
     'Content-Type': 'application/json',
     'Accept' : 'application/json'
   })
-  Future<loto> getTasks(@Query("method") String key, @Query("drwNo") int tab);
+  Future<Loto> getTasks(@Query("method") String key, @Query("drwNo") int tab);
 }

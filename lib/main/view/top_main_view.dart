@@ -25,7 +25,7 @@ class TopMainView extends StatelessWidget {
           Obx(() =>
               Text('')
           ),
-          Obx(() => Text('${controller.kk} 당첨 번호',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+          Obx(() => Text('${controller.lastSerial} 당첨 번호',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
           ),
           Obx(() => Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

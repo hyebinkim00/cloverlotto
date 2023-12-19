@@ -129,7 +129,7 @@ class MainPage extends GetView<MainController>{
                       // 오늘 날짜
                       Text(controller.getDate()),
                       // 최신회차 당첨 번호
-                      Obx(() => Text('${controller.kk} 당첨 번호',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                      Obx(() => Text('${controller.lastSerial} 회 당첨 번호',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
                       ),
                       Obx(() => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -203,7 +203,7 @@ class MainPage extends GetView<MainController>{
                               flex: 1,
                               child: ElevatedButton(onPressed: (){
                                // Get.offAndToNamed(RouteNames.SELF);
-                                Get.toNamed(RouteNames.SELF);
+                                Get.toNamed(RouteNames.SELF,arguments: controller.lastSerial);
                               },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

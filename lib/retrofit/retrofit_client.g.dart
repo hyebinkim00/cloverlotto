@@ -21,7 +21,7 @@ class _RestClient implements RestClient {
   String? baseUrl;
 
   @override
-  Future<loto> getTasks(
+  Future<Loto> getTasks(
     key,
     tab,
   ) async {
@@ -37,7 +37,7 @@ class _RestClient implements RestClient {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result =
-        await _dio.fetch<String>(_setStreamType<loto>(Options(
+        await _dio.fetch<String>(_setStreamType<Loto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -51,7 +51,7 @@ class _RestClient implements RestClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var decodeData = jsonDecode(_result.data!);
-    final value = loto.fromJson(decodeData);
+    final value = Loto.fromJson(decodeData);
     return value;
   }
 
