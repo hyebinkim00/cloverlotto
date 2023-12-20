@@ -3,5 +3,6 @@ class RouteNames{
   static const String RANDOM = "/random";
   static const String SELF = "/self";
   static const String SCAN = "/scan";
+  static const String MYPAGE = "/mypage";
 
 }

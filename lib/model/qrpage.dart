@@ -8,6 +8,8 @@ class qrPqge {
 }
 
 class numInfo{
-  late Color color;
-  late int number;
+  late Color? color;
+  late int? number;
+
+  numInfo ({this.color , this.number});
 }

@@ -200,6 +200,7 @@ class MainPage extends GetView<MainController>{
                               flex: 1,
                               child: ElevatedButton(
                                   onPressed: (){
+                                    Get.toNamed(RouteNames.SCAN);
                                     print('HBSHB');
                                   },
                                   child: Row(

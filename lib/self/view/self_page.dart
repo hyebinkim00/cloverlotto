@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
+import '../../config/route_names.dart';
 import '../controller/self_controller.dart';
 
 class SelfPage extends GetView<SelfController> {
@@ -103,7 +104,8 @@ class SelfPage extends GetView<SelfController> {
                 child: Text('저장하기')),
             TextButton(
                 onPressed: () {
-                  controller.selectdrwNo();
+                  Get.toNamed(RouteNames.MYPAGE);
+
                 },
                 child: Text('확인하기')),
            Obx(() => Text('${controller.dblist}'))

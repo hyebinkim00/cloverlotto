@@ -96,17 +96,20 @@ class DBHelper {
     await db.insert('Lotos', loto.toMap());
   }
 
-  
-  Future<List<Loto>> getLoto() async{
+
+  //MainController에서 회차별 정보 저장한 Get
+
+  Future<List<Loto>> getLoto() async {
     List<Loto> lists = [];
     final db = await database; // 데이터베이스 인스턴스 가져오기
-    List<Map<String, dynamic>> maps =  await db.query('Lotos');
-    for(var map in maps) {
+    List<Map<String, dynamic>> maps =
+    await db.query('Lotos', orderBy: 'id DESC');
+    for (var map in maps) {
       lists.add(Loto.fromMap(map));
     }
-    print('DDDDD'+lists[0].drwNo.toString());
     return lists;
   }
+
 
   // 데이터 조회 메소드
   Future<List<Map<String, dynamic>>> selectData(String tabaleName) async {
@@ -127,15 +130,22 @@ class DBHelper {
     }).toList();
   }
 
-  Future<List<Map<String, dynamic>>> queryByColumn2Value(int targetValue) async {
+
+  // 한 번호당 한개의 리스트니까 return List<int> 로 바꿔야됨
+  Future<List<int>> queryByColumn2Value(int? targetValue) async {
+    List<int> list = [];
     Database dbClient = await database;
-    return await dbClient.query(
+    final List<Map<String, dynamic>> maps  =  await dbClient.query(
       'Lotos',
       where: 'drwNo = ?',
       whereArgs: [targetValue],
     );
-  }
 
+    for (int i= 1; i>5 ;i++){
+      list.add(maps[0]['btns${i}']);
+    }
+    return list;
+  }
 
 
   // 데이터 삭제 메소드

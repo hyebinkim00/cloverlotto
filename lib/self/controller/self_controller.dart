@@ -50,19 +50,22 @@ class SelfController extends GetxController {
 
   // 당첨 번호 비교하는 로직 필요
   void selectdrwNo() async {
-    List<Map<String, dynamic>> db = await DBHelper().queryByColumn2Value(1098);
+    List<int> db = await DBHelper().queryByColumn2Value(1098);
     print('HHHHHHD_' + '${db.length}');
     // 결과 출력 또는 원하는 작업 수행
-    for (Map<String, dynamic> row in db) {
-      print(
-          'ID: ${row['drwNo']}, Column1: ${row['drwNo']}, Column2: ${row['drwNo']}');
-    }
+    // for (Map<String, dynamic> row in db) {
+    //   print(
+    //       'ID: ${row['drwNo']}, Column1: ${row['drwNo']}, Column2: ${row['drwNo']}');
+    // }
   }
 
 
   void winCheck(Loto loto) {
     // 1. 고른 번호 회차, 저장된 번호 회차
-
-
   }
+
+
+
+
+
 }

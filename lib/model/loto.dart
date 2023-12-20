@@ -94,4 +94,14 @@ Loto.fromMap(Map<dynamic , dynamic> map){
     bnusNo = map?['bnusNo'];
 }
 
+  Loto.fromMap2(Map<dynamic , dynamic> map){
+    drwtNo1 = map?['drwNo1'];
+    drwtNo2 = map?['drwNo2'];
+    drwtNo3 = map?['drwNo3'];
+    drwtNo4 = map?['drwNo4'];
+    drwtNo5 = map?['drwNo5'];
+    drwtNo6 = map?['drwNo6'];
+    bnusNo = map?['bnusNo'];
+  }
+
 }
