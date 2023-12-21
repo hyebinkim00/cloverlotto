@@ -149,4 +149,14 @@ class SelfPage extends GetView<SelfController> {
       },
     );
   }
+
+  @override
+  Future<bool> onBackPressed() async {
+    // 뒤로 버튼을 눌렀을 때 수행할 작업
+    // 예를 들어, Get.back()을 호출하여 이전 페이지로 이동
+    Get.back();
+
+    // 뒤로 버튼 처리를 직접 수행할 것이므로 true 반환
+    return true;
+  }
 }

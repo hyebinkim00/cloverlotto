@@ -9,7 +9,7 @@ import '../../sqllite/db.dart';
 
 class MyPageController extends GetxController{
   // 저장된값
-  RxList<selfNum> list = <selfNum>[].obs;
+  RxList<selfNum> dblist = <selfNum>[].obs;
 
   RxList<numInfo> ballList = <numInfo>[].obs;
   List<Map<String, dynamic>> winNumList = <Map<String, dynamic>>[];
@@ -28,11 +28,11 @@ class MyPageController extends GetxController{
 
     // selfControll에서 저장한 리스트 여러개
     List<selfNum> dbList = await DBHelper().getselfList();
-    list.value = dbList;
-    for(int i =0; i<dbList.length; i++){
-      List<int> list =[ dbList[i].num1??0,dbList[i].num2??0,dbList[i].num3??0,dbList[i].num4??0,dbList[i].num5??0];
-      getResult(list, dbList[i].serial);
-    }
+    dblist.value = dbList;
+    // for(int i =0; i<dbList.length; i++){
+    //   List<int> list =[ dbList[i].num1??0,dbList[i].num2??0,dbList[i].num3??0,dbList[i].num4??0,dbList[i].num5??0];
+    //   getResult(list, dbList[i].serial);
+    // }
 
   }
 
@@ -40,6 +40,7 @@ class MyPageController extends GetxController{
   Future<List<numInfo>> getResult(List<int> list, int? serial) async{
     List<numInfo>  n = [];
     List<int> winNums =  await DBHelper().queryByColumn2Value(serial);
+    winNums = [16,21,12,2,43,5];
     print('hbs+__$winNums.toString()');
     for(var i in list){
       if(winNums.contains(i)){
@@ -47,12 +48,28 @@ class MyPageController extends GetxController{
       } else{
         n.add(numInfo(color: Colors.transparent,number: i));
       }
-
     }
     ballList.value = n;
-    return [];
+    return n;
   }
 
+
+  Future<List<numInfo>> getResults(selfNum se) async{
+    List<numInfo>  n = [];
+    // 해당 회차 당첨 번호 불러옴
+    List<int> winNums =  await DBHelper().queryByColumn2Value(se.serial);
+    List<int> sl = [se.num1??0,se.num2??0,se.num3??0,se.num4??0,se.num5??0,se.num6??0];
+    for(var i in sl){
+      print('weg$i'+winNums.toString());
+      if(winNums.contains(i)){
+        n.add(numInfo(color:getColors(i),number: i));
+      } else{
+        n.add(numInfo(color: Colors.transparent,number: i));
+      }
+    }
+    print('gg'''+n.toString());
+    return n;
+  }
 
   // selfList ( 회차 + 번호 6개 )
   // lotoList ( 회차 에 대한 당첨번호 )
@@ -69,11 +86,11 @@ class MyPageController extends GetxController{
     }else if(11 <= num && num <= 20){
       return Colors.blueAccent;
   }else if(21 <= num && num <= 30){
-      return Colors.blueAccent;
+      return Colors.redAccent;
     }else if(31 <= num && num <= 40){
-      return Colors.blueAccent;
+      return Colors.black;
     }else {
-      return Colors.blueAccent;
+      return Colors.green;
     }
   }
 }

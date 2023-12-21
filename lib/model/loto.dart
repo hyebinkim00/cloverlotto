@@ -85,16 +85,19 @@ Map<String, dynamic> toMap(){
 
 Loto.fromMap(Map<dynamic , dynamic> map){
     drwNoDate = map?['drwNoDate'];
-    drwtNo1 = map?['drwNo1'];
-    drwtNo2 = map?['drwNo2'];
-    drwtNo3 = map?['drwNo3'];
-    drwtNo4 = map?['drwNo4'];
-    drwtNo5 = map?['drwNo5'];
-    drwtNo6 = map?['drwNo6'];
+    drwNo = map?['drwNo'];
+    drwtNo1 = map?['drwtNo1'];
+    drwtNo2 = map?['drwtNo2'];
+    drwtNo3 = map?['drwtNo3'];
+    drwtNo4 = map?['drwtNo4'];
+    drwtNo5 = map?['drwtNo5'];
+    drwtNo6 = map?['drwtNo6'];
     bnusNo = map?['bnusNo'];
 }
 
   Loto.fromMap2(Map<dynamic , dynamic> map){
+    drwNoDate = map?['drwNoDate'];
+    drwNo = map?['drwNo'];
     drwtNo1 = map?['drwNo1'];
     drwtNo2 = map?['drwNo2'];
     drwtNo3 = map?['drwNo3'];
@@ -104,4 +107,8 @@ Loto.fromMap(Map<dynamic , dynamic> map){
     bnusNo = map?['bnusNo'];
   }
 
+  @override
+  String toString() {
+    return 'Loto{drwNoDate: $drwNoDate, drwtNo6: $drwtNo6, drwtNo4: $drwtNo4, drwtNo5: $drwtNo5, bnusNo: $bnusNo, drwNo: $drwNo, drwtNo2: $drwtNo2, drwtNo3: $drwtNo3, drwtNo1: $drwtNo1}';
+  }
 }

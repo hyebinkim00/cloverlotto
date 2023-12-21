@@ -21,6 +21,8 @@ class MainController extends GetxController {
   RxList<int> ll = [0, 0, 0, 0, 0, 0, 0, 0].obs;
   RxInt num = 0.obs;
   RxString kk = 's'.obs;
+  RxInt lastSerial = 0.obs;
+
 
   @override
   void onInit() {
@@ -51,14 +53,13 @@ class MainController extends GetxController {
     final element = document.querySelector('.win_result strong');
     kk.value = element?.text ?? '';
 
-    String latest = element?.text ?? 'g';
+    String latestText = element!.text;
+    String se = latestText.replaceAll('회', '');
+    int seral = int.parse(se);
+    lastSerial.value = seral;
+    retro(seral);
+    updateList(seral);
 
-    String dd = latest.replaceAll('회', '');
-    int ddd = int.parse(dd);
-    print('HHHHH' + '$ddd' + dd);
-    retro(ddd);
-    // DBHelper().insertNumber(dd);
-    // retro(ddd);
   }
 
   // 회차 정보 에 따른 당첨 번호 , 추첨일 저장 ==> loto 모델모양으로 db  저장 해야됨  -> mainPage, MyPage에서 씀
@@ -74,7 +75,7 @@ class MainController extends GetxController {
 
       Loto response = await client.getTasks('getLottoNumber', dd);
       numbers.value = response;
-      await DBHelper().addLoto(response);
+
       ll.clear();
       ll.addAll([
         response.drwtNo1 ?? 0,
@@ -103,9 +104,38 @@ class MainController extends GetxController {
         }
       }
     }
+  }
 
+  // DB 에 저장
+  Future <void> updateList(int serial) async {
+    List<Loto> list = [];
+    // 저장되어 있는 값 확인
+    list = await DBHelper().getLoto();
+    if (list.isEmpty){
+      for (int i = 20; i>=0;i--){
+        // 20개 저장 (마지막 회차가 변경되어서 db 추가할때 id 순서를 바꿀수 없으니 내림차순으로 저장)
+        print('hhhh__$serial');
+        await listDbsave(serial-i);
+      }
+    } else{
+      print('eeee'+list.toString());
+      // 최신 번호 바귀면 한개 저장
+    }
+  }
+
+  // 한개씩 DB에 저장
+  Future<void> listDbsave(int serial) async{
+
+    final dio = Dio(BaseOptions(
+      responseType: ResponseType.plain, // 이 부분을 수정
+    ));
+
+    final client = RestClient(dio);
+    Loto response = await client.getTasks('getLottoNumber', serial);
+    await DBHelper().addLoto(response);
 
   }
+
 
   Future<void> numbersList(int numss) async {
     try {
@@ -120,11 +150,4 @@ class MainController extends GetxController {
     } catch (e) {}
   }
 
-  void updated() {
-    // numbers.update((val) {
-    //   val?.returnValue = 'hbhb';});
-    numbers.value?.returnValue = 'update';
-    s++;
-    num++;
-  }
 }

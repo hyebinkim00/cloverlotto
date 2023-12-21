@@ -33,12 +33,14 @@ class DBHelper {
           // SQL 쿼리를 실행하여 데이터베이스 테이블 생성
           'CREATE TABLE example(id INTEGER PRIMARY KEY, name TEXT, value INTEGER)',
         );
+
         await db.execute(
-          // SQL 쿼리를 실행하여 데이터베이스 테이블 생성
-          'CREATE TABLE selfNum(id INTEGER PRIMARY KEY, serial INTEGER, num1 INTEGER, num2 INTEGER, num3 INTEGER, num4 INTEGER, num5 INTEGER, num6 INTEGER)',
+          "CREATE TABLE Lotos(id INTEGER PRIMARY KEY, drwNoDate TEXT, drwNo INTEGER, drwtNo1 INTEGER, drwtNo2 INTEGER, drwtNo3 INTEGER, drwtNo4 INTEGER, drwtNo5 INTEGER, drwtNo6 INTEGER, bnusNo INTEGER)",
         );
+
+        // SelfPage 에서 입력한 번호 6개 리스트 + 회차 선택 넣어야 됨
         await db.execute(
-          "CREATE TABLE Lotos(id INTEGER PRIMARY KEY, drwNoDate TEXT,drwNo INTEGER, drwtNo1 INTEGER, drwtNo2 INTEGER, drwtNo3 INTEGER, drwtNo4 INTEGER, drwtNo5 INTEGER, drwtNo6 INTEGER, bnusNo INTEGER)",
+          'CREATE TABLE selfNum(id INTEGER PRIMARY KEY, serial INTEGER, num1 INTEGER, num2 INTEGER, num3 INTEGER, num4 INTEGER, num5 INTEGER, num6 INTEGER)',
         );
       },
     );
@@ -141,8 +143,9 @@ class DBHelper {
       whereArgs: [targetValue],
     );
 
-    for (int i= 1; i>5 ;i++){
-      list.add(maps[0]['btns${i}']);
+    for (int i = 1; i <= 6; i++) {
+      String columnName = 'drwtNo$i';
+      list.add(maps[0][columnName]);
     }
     return list;
   }
