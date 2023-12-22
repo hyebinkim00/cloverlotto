@@ -24,19 +24,19 @@ class Constants {
       binding: RandomBinding(),
     ),
     GetPage(
-        name: RouteNames.SELF,
-        page: () => SelfPage(),
-        binding: SelfBinding()
+      name: RouteNames.SELF,
+      page: () => SelfPage(),
+      binding: SelfBinding(),
     ),
     GetPage(
-        name: RouteNames.SCAN,
-        page: () => ScanPage(),
-        binding: ScanBinding()
+      name: RouteNames.SCAN,
+      page: () => ScanPage(),
+      binding: ScanBinding(),
     ),
     GetPage(
-        name: RouteNames.MYPAGE,
-        page: () => MyPage(),
-        binding: MyPageBinding()
+      name: RouteNames.MYPAGE,
+      page: () => MyPage(),
+      binding: MyPageBinding(),
     )
   ];
 }

@@ -28,8 +28,6 @@ class MainController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    // numbersList();
-    // retro();
     getLastNo();
   }
 
@@ -112,19 +110,27 @@ class MainController extends GetxController {
     // 저장되어 있는 값 확인
     list = await DBHelper().getLoto();
     if (list.isEmpty){
-      for (int i = 20; i>=0;i--){
+      //
+      // for (int i = 20; i>=0;i--){
+      //   // 20개 저장 (마지막 회차가 변경되어서 db 추가할때 id 순서를 바꿀수 없으니 내림차순으로 저장)
+      //   await listDbsave(serial-i);
+      // }
+      for (int i = 1; i<=20; i++){
         // 20개 저장 (마지막 회차가 변경되어서 db 추가할때 id 순서를 바꿀수 없으니 내림차순으로 저장)
-        print('hhhh__$serial');
         await listDbsave(serial-i);
       }
     } else{
+      if (list[0].drwNo!= serial){
+        print('eeee'+'insert1!');
+        await listDbsave(serial);
+      }
       print('eeee'+list.toString());
       // 최신 번호 바귀면 한개 저장
     }
   }
 
   // 한개씩 DB에 저장
-  Future<void> listDbsave(int serial) async{
+  Future<void> listDbsave(int serial) async {
 
     final dio = Dio(BaseOptions(
       responseType: ResponseType.plain, // 이 부분을 수정

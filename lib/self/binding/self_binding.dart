@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class SelfBinding extends Bindings{
   @override
   void dependencies() {
-    Get.lazyPut<SelfController>(() => SelfController());
+    // Get.lazyPut<SelfController>(() => SelfController());
+    Get.lazyPut(()=>SelfController());
   }
-
 }

@@ -34,6 +34,7 @@ class DBHelper {
           'CREATE TABLE example(id INTEGER PRIMARY KEY, name TEXT, value INTEGER)',
         );
 
+        // MainController 에서 로또 정보 저장
         await db.execute(
           "CREATE TABLE Lotos(id INTEGER PRIMARY KEY, drwNoDate TEXT, drwNo INTEGER, drwtNo1 INTEGER, drwtNo2 INTEGER, drwtNo3 INTEGER, drwtNo4 INTEGER, drwtNo5 INTEGER, drwtNo6 INTEGER, bnusNo INTEGER)",
         );
@@ -105,7 +106,7 @@ class DBHelper {
     List<Loto> lists = [];
     final db = await database; // 데이터베이스 인스턴스 가져오기
     List<Map<String, dynamic>> maps =
-    await db.query('Lotos', orderBy: 'id DESC');
+    await db.query('Lotos', orderBy: 'drwNo DESC');
     for (var map in maps) {
       lists.add(Loto.fromMap(map));
     }

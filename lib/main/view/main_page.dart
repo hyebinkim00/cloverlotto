@@ -22,7 +22,6 @@ class MainPage extends GetView<MainController>{
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
 
   List<int> test =[18,30,42,42,3,44,8,9];
-  final MainController _controller = Get.put(MainController());
 
   final List<String> cardText = ['MBTI로 보는 오늘의 번호','오늘의 운세로 보는 번호','번호 추첨기','랜덤뽑기'];
 
@@ -138,18 +137,14 @@ class MainPage extends GetView<MainController>{
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Obx(() =>
-                          Text('${_controller.numbers.value!.returnValue??'nodata'}+${_controller.num}+${_controller.s}')
-                      ),
-                      Obx(() => Text('${_controller.kk}회 당첨 번호',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                      Obx(() => Text('${controller.kk}회 당첨 번호',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
                       ),
                       Text(getToday()),
                       Obx(() => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: List.generate(8, (index) {
 
-                          String numbers = _controller.ll[index].toString();
-                          print(numbers);
+                          String numbers = controller.ll[index].toString();
                           if(index==6){numbers='+';}
                           //     1번부터 10번까지는 노란색입니다.
                           // 11번 부터 20번까지는 파란색입니다.
@@ -157,7 +152,7 @@ class MainPage extends GetView<MainController>{
                           // 31번부터 40번까지는 검은색입니다.
                           // 41번부터 45번까지는 초록색입니다.
                           Color back = Colors.lightGreen;
-                          if(_controller.ll[index]~/10==1){
+                          if(controller.ll[index]~/10==1){
                             back= Colors.red;
                           }
                           return Expanded(
@@ -185,7 +180,8 @@ class MainPage extends GetView<MainController>{
                             SizedBox(width: 16.0), // 왼쪽 간격 추가
                             Flexible(
                               flex: 1,
-                              child: ElevatedButton(onPressed: (){
+                              child: ElevatedButton(
+                                  onPressed: (){
                                 Get.toNamed(RouteNames.SELF);
                               },
                                   child: Row(
