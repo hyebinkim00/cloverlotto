@@ -77,7 +77,6 @@ class DBHelper {
     for(var map in maps) {
       lists.add(selfNum.fromMap(map));
     }
-    print(lists[0].toString());
     return lists;
   }
 

@@ -11,23 +11,25 @@ class SelfPage extends GetView<SelfController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        return _onBackKey();
-      },
+      onWillPop: _backKey,
       child: Scaffold(
           body: SafeArea(
+            top: true,
         child: Container(
-          width: MediaQuery.of(context).size.width, // 전체 화면을 채우도록 설정
-          height: MediaQuery.of(context).size.height,
+          width: double.infinity// 전체 화면을 채우도록 설정
+            , height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
               //회차 선택
-              TextButton(
-                onPressed: () {
-                  showOptionDialog(context);
-                },
-                child: Text(''+'회'),
-              ),
+              Row(children: [
+                Text('회차  , 추첨일'),
+                TextButton(
+                  onPressed: () {
+                    showOptionDialog(context);
+                  },
+                  child: Text(''+'회'),
+                ),
+              ],),
               Text('번호를 입력하세요!'),
               Expanded(
                 child: GridView.builder(
@@ -40,7 +42,7 @@ class SelfPage extends GetView<SelfController> {
                   itemCount: 45,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
+                  itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
                         controller.selected(index);
@@ -129,20 +131,18 @@ class SelfPage extends GetView<SelfController> {
               ListTile(
                 title: Text('Option 1'),
                 onTap: () {
-                  controller.serial.value = 'option1';
+
                 },
               ),
               ListTile(
                 title: Text('Option 2'),
                 onTap: () {
-                  controller.serial.value = 'option2';
                 },
               ),
               ListTile(
                 title: Text('Option 3'),
                 onTap: () {
-                  controller.serial.value = 'option3';
-                  // 다이어로그 닫음
+                 // 다이어로그 닫음
                   Navigator.of(context).pop();
                 },
               ),
@@ -154,9 +154,9 @@ class SelfPage extends GetView<SelfController> {
   }
 
 
-}
 
-Future<bool> _onBackKey() async {
-  // Get.back();
-  return true;
+  Future<bool> _backKey() async{
+    // Get.delete<SelfController>();
+    return true;
+  }
 }

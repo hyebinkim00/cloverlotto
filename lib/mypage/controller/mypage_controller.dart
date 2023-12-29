@@ -25,7 +25,6 @@ class MyPageController extends GetxController{
 
   // DB(selfNum)에 저장된 값 불러오기 ListView 테이블 한 행씩
   Future<void> getSelfList() async {
-
     // selfControll에서 저장한 리스트 여러개
     List<selfNum> dbList = await DBHelper().getselfList();
     dblist.value = dbList;
@@ -36,28 +35,14 @@ class MyPageController extends GetxController{
 
   }
 
-  // List 한줄씩 비교 --> 5개
-  Future<List<numInfo>> getResult(List<int> list, int? serial) async{
-    List<numInfo>  n = [];
-    List<int> winNums =  await DBHelper().queryByColumn2Value(serial);
-    winNums = [16,21,12,2,43,5];
-    print('hbs+__$winNums.toString()');
-    for(var i in list){
-      if(winNums.contains(i)){
-        n.add(numInfo(color:getColors(i),number: i));
-      } else{
-        n.add(numInfo(color: Colors.transparent,number: i));
-      }
-    }
-    ballList.value = n;
-    return n;
-  }
 
 
   Future<List<numInfo>> getResults(selfNum se) async{
     List<numInfo>  n = [];
     // 해당 회차 당첨 번호 불러옴
     List<int> winNums =  await DBHelper().queryByColumn2Value(se.serial);
+    print('hbsssswind'+winNums.toString());
+
     List<int> sl = [se.num1??0,se.num2??0,se.num3??0,se.num4??0,se.num5??0,se.num6??0];
     for(var i in sl){
       print('weg$i'+winNums.toString());
@@ -67,7 +52,7 @@ class MyPageController extends GetxController{
         n.add(numInfo(color: Colors.transparent,number: i));
       }
     }
-    print('gg'''+n.toString());
+    print('hbhbs'''+n.toString());
     return n;
   }
 

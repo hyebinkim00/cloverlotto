@@ -2,7 +2,7 @@ import 'package:cloverlotto/config/route_names.dart';
 import 'package:cloverlotto/main/binding/main_binding.dart';
 import 'package:cloverlotto/main/view/main_page.dart';
 import 'package:cloverlotto/mypage/binding/mypage_binding.dart';
-import 'package:cloverlotto/mypage/view/MyPage.dart';
+import 'package:cloverlotto/mypage/view/mypage_page.dart';
 import 'package:cloverlotto/random/binding/random_binding.dart';
 import 'package:cloverlotto/random/view/random_page.dart';
 import 'package:cloverlotto/scan/binding/scan_binding.dart';

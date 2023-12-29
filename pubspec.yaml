@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  get: ^4.6.5
+  get: ^4.6.6
   flutter_screenutil: ^5.5.4
   intl: ^0.17.0
   http: ^1.1.0
@@ -43,6 +43,7 @@ dependencies:
   animated_splash_screen: ^1.1.0
   sqflite: ^2.3.0
   path: ^1.8.3
+  fluttertoast: ^8.2.4
 #  qr_code_scanner: ^1.0.1
 
   # The following adds the Cupertino Icons font to your application.

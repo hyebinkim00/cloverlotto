@@ -1,16 +1,12 @@
 import 'package:cloverlotto/model/selfnum.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
-
 import '../../model/loto.dart';
 import '../../sqllite/db.dart';
 
 class SelfController extends GetxController {
   RxList<int> selectList = <int>[].obs;
   RxList<bool> isSelected = List.generate(45, (index) => false).obs;
-  RxString serial = '회차 선택'.obs;
-  RxString dbs = 'null'.obs;
-  List<int> dbItem = [];
 
 
   // 눌린 수 -> selectList 에 없으면 저장 있으면 제거
@@ -38,9 +34,17 @@ class SelfController extends GetxController {
   }
 
 
+
+
   // 선택한 번호 6개 저장하기
   void saveList() async {
-    await DBHelper().insertDataList(selfNum(serial: 1098,num1: selectList[0],num2: selectList[1],num3: selectList[2],num4: selectList[3],num5: selectList[4],num6: selectList[5]));
+    if (selectList.length!=6){
+      Fluttertoast.showToast(msg: '숫자 6개를 입력하세요!');
+    } else{
+    await DBHelper().insertDataList(selfNum(serial: 1099,num1: selectList[0],num2: selectList[1],num3: selectList[2],num4: selectList[3],num5: selectList[4],num6: selectList[5]));
+    isSelected.assignAll(List.generate(45, (index) => false));
+    selectList.clear();
+    }
     // selectDb();
   }
 
@@ -62,10 +66,5 @@ class SelfController extends GetxController {
     //       'ID: ${row['drwNo']}, Column1: ${row['drwNo']}, Column2: ${row['drwNo']}');
     // }
   }
-
-
-
-
-
 
 }

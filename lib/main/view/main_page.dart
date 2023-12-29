@@ -1,6 +1,6 @@
 import 'package:cloverlotto/main/controller/main_controller.dart';
 import 'package:cloverlotto/random/view/random_page.dart';
-import 'package:cloverlotto/self/view/self_page.dart';
+import 'package:cloverlotto/self/controller/self_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -122,7 +122,7 @@ class MainPage extends GetView<MainController>{
       body: SafeArea(
         top: false,
         child: Container(
-          height: double.infinity,
+          height: Get.height,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -143,7 +143,6 @@ class MainPage extends GetView<MainController>{
                       Obx(() => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: List.generate(8, (index) {
-
                           String numbers = controller.ll[index].toString();
                           if(index==6){numbers='+';}
                           //     1번부터 10번까지는 노란색입니다.
@@ -182,7 +181,7 @@ class MainPage extends GetView<MainController>{
                               flex: 1,
                               child: ElevatedButton(
                                   onPressed: (){
-                                Get.toNamed(RouteNames.SELF);
+                                    Get.toNamed(RouteNames.SELF);
                               },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -235,7 +234,7 @@ class MainPage extends GetView<MainController>{
                         return GestureDetector(
                           onTap: (){
                             if (index==3){
-                              Get.to(()=> RandomPage());
+                              // Get.to(()=> RandomPage());
                             }
                             print('HBS::: $index');
                           },
