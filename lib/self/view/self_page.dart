@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,23 +13,45 @@ class SelfPage extends GetView<SelfController> {
       onWillPop: _backKey,
       child: Scaffold(
           body: SafeArea(
-            top: true,
+        top: true,
         child: Container(
-          width: double.infinity// 전체 화면을 채우도록 설정
-            , height: MediaQuery.of(context).size.height,
+          width: double.infinity, // 전체 화면을 채우도록 설정
+          height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
               //회차 선택
-              Row(children: [
-                Text('회차  , 추첨일'),
-                TextButton(
-                  onPressed: () {
-                    showOptionDialog(context);
-                  },
-                  child: Text(''+'회'),
+              Container(
+                margin: EdgeInsets.only(left: 10, right: 10),
+                padding: EdgeInsets.all(20),
+                color: Colors.deepOrangeAccent,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '제 ${Get.arguments['lastSerial']}회',
+                      style: const TextStyle(color: Colors.white,fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    // OutlinedButton(
+                    //     onPressed: () {
+                    //       showOptionDialog(context);
+                    //     },
+                    //     child: Text('회차변경'))
+                  ],
                 ),
-              ],),
-              Text('번호를 입력하세요!'),
+              ),
+              // Obx(() => TextButton(
+              //       onPressed: () {
+              //         showOptionDialog(context);
+              //       },
+              //       style: ButtonStyle(
+              //           backgroundColor:
+              //               MaterialStateProperty.all<Color>(Colors.orange),
+              //           foregroundColor:
+              //               MaterialStateProperty.all<Color>(Colors.white)),
+              //       // MainController에서 최신 회차를 가져옴
+              //       // 초기 값을 '회차 선택'으로 바꿔야하나 고민
+              //       child: Text('제 ${Get.arguments['lastSerial']}회'),
+              //     )),
               Expanded(
                 child: GridView.builder(
                   padding: EdgeInsets.all(10),
@@ -73,7 +94,8 @@ class SelfPage extends GetView<SelfController> {
                                           bottom: BorderSide(
                                               color: Colors.transparent),
                                           left: BorderSide(color: Colors.white),
-                                          right: BorderSide(color: Colors.white)),
+                                          right:
+                                              BorderSide(color: Colors.white)),
                                       color: controller.isSelected[index]
                                           ? Colors.black45
                                           : Colors.white),
@@ -102,17 +124,18 @@ class SelfPage extends GetView<SelfController> {
                   },
                 ),
               ),
+
               TextButton(
-                  onPressed: () {
+                style:  ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(50),
+                  backgroundColor: Colors.deepOrangeAccent,
+                      foregroundColor: Colors.white,
+                ), onPressed: () {
                     controller.saveList();
-                  },
-                  child: Text('저장하기')),
-              TextButton(
-                  onPressed: () {
-                    Get.toNamed(RouteNames.MYPAGE);
+                    //      Get.toNamed(RouteNames.MYPAGE);
                   },
                   child: Text('확인하기')),
-             // Obx(() => Text('${controller.dblist}'))
+              // Obx(() => Text('${controller.dblist}'))
             ],
           ),
         ),
@@ -130,19 +153,16 @@ class SelfPage extends GetView<SelfController> {
             children: [
               ListTile(
                 title: Text('Option 1'),
-                onTap: () {
-
-                },
+                onTap: () {},
               ),
               ListTile(
                 title: Text('Option 2'),
-                onTap: () {
-                },
+                onTap: () {},
               ),
               ListTile(
                 title: Text('Option 3'),
                 onTap: () {
-                 // 다이어로그 닫음
+                  // 다이어로그 닫음
                   Navigator.of(context).pop();
                 },
               ),
@@ -153,9 +173,7 @@ class SelfPage extends GetView<SelfController> {
     );
   }
 
-
-
-  Future<bool> _backKey() async{
+  Future<bool> _backKey() async {
     // Get.delete<SelfController>();
     return true;
   }

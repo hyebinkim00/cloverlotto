@@ -181,7 +181,7 @@ class MainPage extends GetView<MainController>{
                               flex: 1,
                               child: ElevatedButton(
                                   onPressed: (){
-                                    Get.toNamed(RouteNames.SELF);
+                                    Get.toNamed(RouteNames.SELF,arguments: {'lastSerial': controller.lastSerial});
                               },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -234,7 +234,7 @@ class MainPage extends GetView<MainController>{
                         return GestureDetector(
                           onTap: (){
                             if (index==3){
-                              // Get.to(()=> RandomPage());
+                             Get.toNamed(RouteNames.MYPAGE);
                             }
                             print('HBS::: $index');
                           },

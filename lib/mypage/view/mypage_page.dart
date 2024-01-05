@@ -36,12 +36,11 @@ class MyPage extends GetView<MyPageController> {
                         }
                         else if (snapshot.data != null && snapshot.hasData) {
                           controller.ballList.value = snapshot.data!;
-                          print('ccccccc+${controller.ballList.toString()}');
                         }
                         return Container(
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal, // 가로 방향으로 스크롤합니다.
-                            itemCount: controller.ballList.length,
+                            itemCount: snapshot.data!.length,
                             itemBuilder: (BuildContext context , int indexs){
                               return Container(
                                 width: 50.0,
@@ -49,11 +48,11 @@ class MyPage extends GetView<MyPageController> {
                                 margin: EdgeInsets.only(left: 5, right: 5),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: controller.ballList![indexs].color,
+                                  color: snapshot.data![indexs].color,
                                 ),
                                 child: Center(
                                     child: Text(
-                                      '${controller.ballList![indexs].number}',
+                                      '${snapshot.data![indexs].number}',
                                       style: TextStyle(
                                         color: Colors.black,
                                         // 텍스트 색상 설정

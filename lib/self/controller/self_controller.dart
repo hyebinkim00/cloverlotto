@@ -7,8 +7,14 @@ import '../../sqllite/db.dart';
 class SelfController extends GetxController {
   RxList<int> selectList = <int>[].obs;
   RxList<bool> isSelected = List.generate(45, (index) => false).obs;
+  // RxInt serial = 0.obs;
 
-
+  @override
+  void onInit() {
+    // var last = Get.arguments['lastSerial'];
+    // serial.value = last;
+    super.onInit();
+  }
   // 눌린 수 -> selectList 에 없으면 저장 있으면 제거
 
   // boolean값으로 저장

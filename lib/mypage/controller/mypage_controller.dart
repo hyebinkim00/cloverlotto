@@ -10,7 +10,6 @@ import '../../sqllite/db.dart';
 class MyPageController extends GetxController{
   // 저장된값
   RxList<selfNum> dblist = <selfNum>[].obs;
-
   RxList<numInfo> ballList = <numInfo>[].obs;
   List<Map<String, dynamic>> winNumList = <Map<String, dynamic>>[];
 
@@ -28,16 +27,11 @@ class MyPageController extends GetxController{
     // selfControll에서 저장한 리스트 여러개
     List<selfNum> dbList = await DBHelper().getselfList();
     dblist.value = dbList;
-    // for(int i =0; i<dbList.length; i++){
-    //   List<int> list =[ dbList[i].num1??0,dbList[i].num2??0,dbList[i].num3??0,dbList[i].num4??0,dbList[i].num5??0];
-    //   getResult(list, dbList[i].serial);
-    // }
-
   }
 
 
 
-  Future<List<numInfo>> getResults(selfNum se) async{
+  Future<List<numInfo>> getResults(selfNum se) async {
     List<numInfo>  n = [];
     // 해당 회차 당첨 번호 불러옴
     List<int> winNums =  await DBHelper().queryByColumn2Value(se.serial);
@@ -55,6 +49,8 @@ class MyPageController extends GetxController{
     print('hbhbs'''+n.toString());
     return n;
   }
+
+
 
   // selfList ( 회차 + 번호 6개 )
   // lotoList ( 회차 에 대한 당첨번호 )
