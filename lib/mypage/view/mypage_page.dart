@@ -15,55 +15,66 @@ class MyPage extends GetView<MyPageController> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Nested ListView Example'),
+          title: Text('저장 목록'),
         ),
         body: Obx(()=>
             ListView.builder(
               itemCount: controller.dblist.length, // 예제로 5개의 항목을 만듭니다.
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  height: 100, // 각 항목의 높이를 설정합니다.
-                  child: FutureBuilder(
-                      future: controller.getResults(controller.dblist[index]),
-                      builder: (context,snapshot){
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          // return CircularProgressIndicator();// 데이터를 기다리는 동안 로딩 인디케이터를 표시합니다.
-                          return Container(color: Colors.transparent,);
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else if (!snapshot.hasData) {
-                          return Text('No data available'); // 데이터가 없는 경우에 대한 처리를 추가합니다.
-                        }
-                        else if (snapshot.data != null && snapshot.hasData) {
-                          controller.ballList.value = snapshot.data!;
-                        }
-                        return Container(
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal, // 가로 방향으로 스크롤합니다.
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (BuildContext context , int indexs){
-                              return Container(
-                                width: 50.0,
-                                height: 50.0,
-                                margin: EdgeInsets.only(left: 5, right: 5),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: snapshot.data![indexs].color,
-                                ),
-                                child: Center(
-                                    child: Text(
-                                      '${snapshot.data![indexs].number}',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        // 텍스트 색상 설정
-                                        fontSize: 24.0, // 텍스트 크기 설정
-                                      ),
-                                    )),
-                              );
-                            },
-                          ),
-                        );
-                      }),
+                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey,width: 1.0)
+                  ),
+                  height: 150, // 각 항목의 높이를 설정합니다.
+                  child: Column(
+                    children: [
+                      Text('${controller.dblist[index].serial}'),
+                      FutureBuilder(
+                          future: controller.getResults(controller.dblist[index]),
+                          builder: (context,snapshot){
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              // return CircularProgressIndicator();// 데이터를 기다리는 동안 로딩 인디케이터를 표시합니다.
+                              return Container(color: Colors.transparent,);
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else if (!snapshot.hasData) {
+                              return Text('No data available'); // 데이터가 없는 경우에 대한 처리를 추가합니다.
+                            }
+                            else if (snapshot.data != null && snapshot.hasData) {
+                              controller.ballList.value = snapshot.data!;
+                            }
+                            return Container(
+                              child: ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.horizontal, // 가로 방향으로 스크롤합니다.
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (BuildContext context , int indexs){
+                                  return Container(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    margin: EdgeInsets.only(left: 5, right: 5),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: snapshot.data![indexs].color,
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                          '${snapshot.data![indexs].number}',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            // 텍스트 색상 설정
+                                            fontSize: 24.0, // 텍스트 크기 설정
+                                          ),
+                                        )),
+                                  );
+                                },
+                              ),
+                            );
+                          }),
+                    ],
+                  ),
                 );
               },
             )),
