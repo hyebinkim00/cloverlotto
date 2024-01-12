@@ -235,7 +235,7 @@ class MainPage extends GetView<MainController>{
                         return GestureDetector(
                           onTap: (){
                             if (index==3){
-                             Get.toNamed(RouteNames.MYPAGE);
+                             Get.toNamed(RouteNames.RANDOM);
                             }
                             print('HBS::: $index');
                           },

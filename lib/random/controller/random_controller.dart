@@ -1,9 +1,42 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 
 class RandomController extends GetxController{
 
+  RxBool isSwitched = false.obs;
+
   RxString inNum = ''.obs;
   RxInt inNumber = 0.obs;
+  RxList<List<int>> allRandomNumbers = <List<int>>[].obs;
+  late String enteredNumber;
+
+  void create_list(){
+    allRandomNumbers.clear();
+    enteredNumber  = '3';
+    var random = Random();
+    isSwitched.value = !isSwitched.value;
+    print('hhhh $isSwitched');
+    for (var i = 0; i < 15; i++) {
+      List<int> randomNumbers = [];
+
+      // 1부터 45까지의 숫자 중에서 랜덤으로 6개 선택
+      while (randomNumbers.length < 6) {
+        int randomNumber = random.nextInt(45) + 1;
+        if (randomNumber != int.parse(enteredNumber)){
+          randomNumbers.add(randomNumber);
+        }
+      }
+
+      inNumber.value = 6;
+      // 리스트를 정렬
+      randomNumbers.sort();
+
+      // 생성된 랜덤 숫자 리스트를 전체 리스트에 추가
+      allRandomNumbers.add(randomNumbers);
+    }
+  }
+
 
 
 }
