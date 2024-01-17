@@ -36,17 +36,17 @@ class RandomPage extends GetView<RandomController> {
                 children: [Text('${controller.inNum}')],
               ),
             ),
-            Obx(
-              () => ListView.builder(
-                shrinkWrap: true,
-                itemCount: controller.allRandomNumbers.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Center(
-                    child: Text('${controller.allRandomNumbers[index]}'),
-                  );
-                },
-              ),
-            ),
+            // Obx(
+            //   () => ListView.builder(
+            //     shrinkWrap: true,
+            //     itemCount: controller.allRandomNumbers.length,
+            //     itemBuilder: (BuildContext context, int index) {
+            //       return Center(
+            //         child: Text('${controller.allRandomNumbers[index]}'),
+            //       );
+            //     },
+            //   ),
+            // ),
             TextButton(
                 onPressed: () {
                   press = !press;
@@ -63,7 +63,23 @@ class RandomPage extends GetView<RandomController> {
                   child: child,
                 );
               },
+            )),
+            Obx(() => AnimatedSwitcher(
+              duration: Duration(milliseconds: 1000),
+              transitionBuilder: (child, animation){
+                final rotateValue = Tween<double>(begin: 0, end: 0.0).animate(animation);
+                return Transform(
+                  alignment: Alignment.center,
+                  transform:Matrix4.identity()
+                    ..setEntry(3, 2, 0.001) // Add perspective
+                    ..rotateY( 0),
+                  child: child,
+                );
+              },
+              child: createBox(controller.isSwitched.value),
             ))
+
+
           ],
         ),
 

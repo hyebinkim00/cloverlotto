@@ -8,18 +8,22 @@ import 'package:get/get.dart';
 import '../../model/selfnum.dart';
 
 class MyPage extends GetView<MyPageController> {
-  List<selforigin>? numBox = [];
+
+  // 앱바에서 뒤로 버튼
+  // 탭바로 직접입력 , QR스캔 분리
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          leading: BackButtonIcon(),
           title: Text('저장 목록'),
         ),
         body:
         Column(
           children: [
+            // 회차 선택
             TabBar(tabs: [Tab(text: '직접입력'),Tab(text:'QR스캔')],
             controller: controller.tabController,
             indicatorColor: Colors.deepOrangeAccent,
@@ -29,6 +33,13 @@ class MyPage extends GetView<MyPageController> {
             //     0xffffa228)),
             unselectedLabelColor: Colors.grey,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              IconButton(onPressed: (){}, icon: Icon(Icons.arrow_circle_left)),
+              Text('1102회', style: TextStyle(fontSize: 20),),
+              IconButton(onPressed: (){}, icon: Icon(Icons.arrow_circle_right))
+            ],),
             Expanded(
               child: TabBarView(
                 controller: controller.tabController,

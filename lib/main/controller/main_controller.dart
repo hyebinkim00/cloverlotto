@@ -133,7 +133,7 @@ class MainController extends GetxController {
 
   // 한개씩 DB에 저장
   Future<void> listDbsave(int serial) async {
-
+    print('hbhb___${serial}');
     final dio = Dio(BaseOptions(
       responseType: ResponseType.plain, // 이 부분을 수정
     ));

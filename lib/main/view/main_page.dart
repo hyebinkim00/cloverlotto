@@ -240,6 +240,8 @@ class MainPage extends GetView<MainController>{
                              // Get.toNamed(RouteNames.RANDOM);
                             } else if(index == 1){
                               Get.toNamed(RouteNames.MYPAGE);
+                            }else if(index == 2){
+                              Get.toNamed(RouteNames.RANDOM);
                             }
                             print('HBS::: $index');
                           },
