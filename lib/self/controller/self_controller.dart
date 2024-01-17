@@ -54,12 +54,6 @@ class SelfController extends GetxController {
     // selectDb();
   }
 
-  // 저장된 번호 리스트
-  void getList() async {
-    List<selfNum> allLists = await DBHelper().getselfList();
-
-  }
-
 
 
   // 당첨 번호 비교하는 로직 필요

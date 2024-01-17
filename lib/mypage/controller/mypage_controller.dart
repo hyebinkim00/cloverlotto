@@ -7,19 +7,72 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../sqllite/db.dart';
 
-class MyPageController extends GetxController{
+class MyPageController extends GetxController with GetSingleTickerProviderStateMixin{
   // 저장된값
   RxList<selfNum> dblist = <selfNum>[].obs;
-  RxList<numInfo> ballList = <numInfo>[].obs;
-  List<Map<String, dynamic>> winNumList = <Map<String, dynamic>>[];
+  RxList<selforigin> ballList = <selforigin>[].obs;
+  late TabController tabController;
+
+  RxList<List<selforigin>> QRballLists = <List<selforigin>>[].obs;
+  RxList<QrInfo> qrtest =  <QrInfo>[].obs;
 
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    tabController = TabController(length: 2, vsync: this);
     getSelfList();
+    getQrcodeList();
   }
+
+  Future<void> getQrcodeList() async{
+    List<QrInfo> qr = await DBHelper().getAllNumLists();
+    print('sgsgsg+${qr.length}');
+
+    for(QrInfo info in qr) {
+      List<NumInfo> numInfoList = info.myNum ?? [];
+      print('sgsgsg___${numInfoList.length}');
+
+    }
+
+
+    qrtest.value = qr;
+  }
+
+
+  // 아이템 한개 - >
+  Future<List<List<selforigin>>> getTEST(int ser, List<NumInfo> mynums) async {
+    List<int> winNums =  await DBHelper().queryByColumn2Value(ser);
+    print('hbhb__ws${winNums.toString()}');
+
+    List<List<selforigin>> nus = [];
+    int sx = mynums.length;
+    print('hbhb__my${sx}');
+    // sx ( mynums 갯수만큼 반복)
+
+    for (int i = 0 ; i < sx ; i++){
+      List<selforigin>  n = [];
+      List<int> m = [mynums[i].num1??0, mynums[i].num2??0, mynums[i].num3??0, mynums[i].num4??0, mynums[i].num5??0,mynums[i].num6??0];
+      print('hbhb__mmm${m.toString()}');
+
+      for(var i in m){
+        if(winNums.contains(i)){
+          n.add(selforigin(color:getColors(i),number: i));
+        } else{
+          n.add(selforigin(color: Colors.grey,number: i));
+        }
+        print('nnnnnnnnnn${n}');
+      }
+      nus.add(n);
+    }
+
+    return nus;
+    // QRINFO 리스트 개수 , 공 리스트
+  }
+
+
+
 
 
   // DB(selfNum)에 저장된 값 불러오기 ListView 테이블 한 행씩
@@ -31,8 +84,8 @@ class MyPageController extends GetxController{
 
 
 
-  Future<List<numInfo>> getResults(selfNum se) async {
-    List<numInfo>  n = [];
+  Future<List<selforigin>> getResults(selfNum se) async {
+    List<selforigin>  n = [];
     // 해당 회차 당첨 번호 불러옴
     List<int> winNums =  await DBHelper().queryByColumn2Value(se.serial);
     print('hbsssswind'+winNums.toString());
@@ -41,12 +94,13 @@ class MyPageController extends GetxController{
     for(var i in sl){
       print('weg$i'+winNums.toString());
       if(winNums.contains(i)){
-        n.add(numInfo(color:getColors(i),number: i));
+        n.add(selforigin(color:getColors(i),number: i));
       } else{
-        n.add(numInfo(color: Colors.transparent,number: i));
+        n.add(selforigin(color: Colors.grey,number: i));
       }
     }
     print('hbhbs'''+n.toString());
+
     return n;
   }
 

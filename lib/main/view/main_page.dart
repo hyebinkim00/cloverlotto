@@ -1,4 +1,5 @@
 import 'package:cloverlotto/main/controller/main_controller.dart';
+import 'package:cloverlotto/model/qrpage.dart';
 import 'package:cloverlotto/random/view/random_page.dart';
 import 'package:cloverlotto/self/controller/self_controller.dart';
 import 'package:flutter/material.dart';
@@ -234,8 +235,11 @@ class MainPage extends GetView<MainController>{
                       itemBuilder: (BuildContext context, int index){
                         return GestureDetector(
                           onTap: (){
-                            if (index==3){
-                             Get.toNamed(RouteNames.RANDOM);
+                            if (index==0){
+                              controller.qrTest();
+                             // Get.toNamed(RouteNames.RANDOM);
+                            } else if(index == 1){
+                              Get.toNamed(RouteNames.MYPAGE);
                             }
                             print('HBS::: $index');
                           },

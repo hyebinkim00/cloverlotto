@@ -11,6 +11,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:html/parser.dart' as htmlParser;
 import 'package:cp949_codec/cp949_codec.dart';
 
+import '../../model/qrpage.dart';
+
 class MainController extends GetxController {
   // Rx<loto?> numbers = Rx<loto?>(loto()).obs;
   var s = 0.obs;
@@ -154,6 +156,16 @@ class MainController extends GetxController {
         numbers.value = lotos;
       }
     } catch (e) {}
+  }
+
+  void qrTest() async {
+    List<NumInfo> n = [];
+
+    n.add(NumInfo(num1: 1,num2: 2,num3: 3,num4: 4,num5: 5,num6: 6));
+    n.add(NumInfo(num1: 7,num2: 8,num3: 9,num4: 10,num5: 11,num6: 12));
+    print('nmnn ${n.toString()}');
+    QrInfo qr = QrInfo(serial: 12,myNum: n);
+    await DBHelper().insertData(qr);
   }
 
 }

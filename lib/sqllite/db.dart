@@ -1,3 +1,4 @@
+import 'package:cloverlotto/model/qrpage.dart';
 import 'package:cloverlotto/model/selfnum.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -43,22 +44,34 @@ class DBHelper {
         await db.execute(
           'CREATE TABLE selfNum(id INTEGER PRIMARY KEY, serial INTEGER, num1 INTEGER, num2 INTEGER, num3 INTEGER, num4 INTEGER, num5 INTEGER, num6 INTEGER)',
         );
+
+        await db.execute(
+          'CREATE TABLE qrInfo(id INTEGER PRIMARY KEY, serial INTEGER, myNum TEXT)',
+        );
       },
     );
   }
 
   // 데이터 추가 메소드
-  Future<void> insertData(String name, int value) async {
+  Future<void> insertData(QrInfo qrInfo) async {
     final db = await database; // 데이터베이스 인스턴스 가져오기
     await db.insert(
-      'example', // 데이터를 추가할 테이블 이름
-      {
-        'name': name,
-        'value': value,
-      }, // 추가할 데이터
+      'qrInfo', // 데이터를 추가할 테이블 이름
+      qrInfo.toMap(), // 추가할 데이터
       conflictAlgorithm: ConflictAlgorithm.replace, // 중복 데이터 처리 방법 설정
     );
   }
+
+
+  Future<List<QrInfo>> getAllNumLists() async {
+    Database db = await database;
+    List<Map<String, dynamic>> maps = await db.query('qrInfo');
+    return List.generate(maps.length, (index) {
+      return QrInfo.fromMap(maps[index]);
+    });
+  }
+
+
 
   // 데이터 추가 메소드
   Future<void> insertDataList(selfNum list) async {
