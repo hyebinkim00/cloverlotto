@@ -12,6 +12,10 @@ class RandomPage extends GetView<RandomController> {
   // 번호추첨 -> 제외 하고 싶은 숫자 , 포함하고 싶은 숫자  , ---> 여섯개 숫자 랜덤 리스트 10개 == > 생성된 번호 저장 가능
   TextEditingController _controller = TextEditingController();
 
+  bool _isBACK = true;
+
+  double _angle = 0;
+
   bool press = true;
   @override
   Widget build(BuildContext context) {
@@ -51,34 +55,62 @@ class RandomPage extends GetView<RandomController> {
                 onPressed: () {
                   press = !press;
                   controller.create_list();
+                  controller.onTap();
                 },
                 child: Text('번호 생성하기'))
             ,
-            Obx(() => AnimatedSwitcher(
-                duration: Duration(milliseconds: 1000),
-              child: createBox(controller.isSwitched.value),
-              transitionBuilder : (Widget child, Animation<double> animation) {
-                return FadeTransition(
-                  opacity: animation,
-                  child: child,
+            // Obx(() => AnimatedSwitcher(
+            //     duration: Duration(milliseconds: 1000),
+            //   child: createBox(controller.isSwitched.value),
+            //   transitionBuilder : (Widget child, Animation<double> animation) {
+            //     return FadeTransition(
+            //       opacity: animation,
+            //       child: child,
+            //     );
+            //   },
+            // )),
+            Obx(() => TweenAnimationBuilder(
+              duration: Duration(milliseconds: 2000),
+              curve: Curves.easeInOut, // 추가된 부분
+              tween: Tween<double>(begin: 0, end: controller.angle.value),
+              onEnd: (){controller.onTap3();} ,
+              builder: (BuildContext con, double val, child) {
+                return Transform(
+                    alignment: Alignment.center,
+                  // alignment: FractionalOffset.center,
+                  transform:Matrix4.identity()
+                    ..setEntry(3, 2, 0.002) // 원근 효과
+                    ..rotateY(val * (3.14 / 180)),
+                  child: Container(width: 100, height: 100,
+                    decoration:BoxDecoration(
+                      color: controller.isBack.value ? Colors.black: Colors.yellowAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)
+                      ),
+                    ),
+                    child: (Center(child:Text(controller.isBack.value?'Front':'Back'))),
+                  ),
                 );
               },
             )),
-            Obx(() => AnimatedSwitcher(
-              duration: Duration(milliseconds: 1000),
-              transitionBuilder: (child, animation){
-                final rotateValue = Tween<double>(begin: 0, end: 0.0).animate(animation);
-                return Transform(
-                  alignment: Alignment.center,
-                  transform:Matrix4.identity()
-                    ..setEntry(3, 2, 0.001) // Add perspective
-                    ..rotateY( 0),
-                  child: child,
-                );
-              },
-              child: createBox(controller.isSwitched.value),
+            Obx(() => GestureDetector(
+              onTap: (){controller.onTap2();},
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+                transform: Matrix4.rotationY(controller.angle.value * (3.1415927 / 180)),
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: controller.backgroundColor.value,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Text(
+                    controller.isBack.value ? 'Back' : 'Front',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),),
             ))
-
 
           ],
         ),
