@@ -11,6 +11,7 @@ class ScanPage extends GetView<ScanController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: true,
         child: Container(
       child: Column(
         children: [

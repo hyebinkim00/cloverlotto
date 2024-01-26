@@ -4,9 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RandomController extends GetxController{
-  RxList<int> sel = <int>[].obs;
-  RxInt s= 0.obs;
+class Random2Controller extends GetxController{
 
   RxBool isSwitched = false.obs;
 
@@ -36,13 +34,6 @@ class RandomController extends GetxController{
 
   void onTap3(){
     isBack.value = !isBack.value;
-
-  }
-
-  void onSele(List<int> list) {
-
-    sel.assignAll(list);
-    print('cont_2${sel.value}');
 
   }
 

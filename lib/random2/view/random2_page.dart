@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:cloverlotto/config/util_dialog.dart';
@@ -7,14 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
-import '../controller/random_controller.dart';
+import '../controller/random2_controller.dart';
 
-class RandomPage extends GetView<RandomController> {
+class Random2Page extends GetView<Random2Controller> {
   // 번호추첨 -> 제외 하고 싶은 숫자 , 포함하고 싶은 숫자  , ---> 여섯개 숫자 랜덤 리스트 10개 == > 생성된 번호 저장 가능
   TextEditingController _controller = TextEditingController();
-
-  List<int> ss = [4,9];
   bool press = true;
+  List<int> ss = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,21 +22,21 @@ class RandomPage extends GetView<RandomController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Container(
-                child: TextButton(
-                    onPressed: () {
-                      // _showNumberInputDialog(context);
-                      UtilDialog.getDi(context);
-                      // UtilDialog.selectNumbers(context, false,controller.sel.value,(select){
-                      //   print('selelel+_${select}');
-                      //   controller.onSele(select);
-                      // } );
-                    },
-                    child: Text('제거할 숫자')),
-
+            Container(
+              child: TextButton(
+                  onPressed: () {
+                    // _showNumberInputDialog(context);
+                    UtilDialog.selectNumbers(context, false,ss,(select){
+                      print('Dioalog ${select}');
+                    } );
+                  },
+                  child: Text('제거할 숫자')),
+            ),
+            Obx(
+              () => Row(
+                children: [Text('${controller.inNum}')],
               ),
-            Obx(() => Text('SSS__${controller.s.value}'),),
-            Obx(() => Text('SSS__${controller.sel.value}')),
+            ),
             // Obx(
             //   () => ListView.builder(
             //     shrinkWrap: true,

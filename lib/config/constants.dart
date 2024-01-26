@@ -5,10 +5,14 @@ import 'package:cloverlotto/mypage/binding/mypage_binding.dart';
 import 'package:cloverlotto/mypage/view/mypage_page.dart';
 import 'package:cloverlotto/random/binding/random_binding.dart';
 import 'package:cloverlotto/random/view/random_page.dart';
+import 'package:cloverlotto/random2/binding/random2_binding.dart';
+import 'package:cloverlotto/random2/view/random2_page.dart';
 import 'package:cloverlotto/scan/binding/scan_binding.dart';
 import 'package:cloverlotto/scan/view/scan_page.dart';
 import 'package:cloverlotto/self/binding/self_binding.dart';
 import 'package:cloverlotto/self/view/self_page.dart';
+import 'package:cloverlotto/spinning/circlespin_binding.dart';
+import 'package:cloverlotto/spinning/circlespin_page.dart';
 import 'package:get/get.dart';
 
 class Constants {
@@ -37,6 +41,16 @@ class Constants {
       name: RouteNames.MYPAGE,
       page: () => MyPage(),
       binding: MyPageBinding(),
+    ),
+    GetPage(
+      name: RouteNames.RANDOM2,
+      page: () => Random2Page(),
+      binding: Random2Binding(),
+    ),
+    GetPage(
+      name: RouteNames.SPINNING,
+      page: () => CircleSpinPage(),
+      binding: CircleSpinBinding(),
     )
   ];
 }
