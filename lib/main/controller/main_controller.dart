@@ -30,7 +30,8 @@ class MainController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getLastNo();
+    print('dddddddddd');
+    // getLastNo();
   }
 
   // 1. 마지막 회차 정보 가져오기

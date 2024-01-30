@@ -1,3 +1,5 @@
+import 'package:cloverlotto/bottomMain/binding/bottomnavi_binding.dart';
+import 'package:cloverlotto/bottomMain/view/bottomnavi_page.dart';
 import 'package:cloverlotto/config/route_names.dart';
 import 'package:cloverlotto/main/binding/main_binding.dart';
 import 'package:cloverlotto/main/view/main_page.dart';
@@ -15,11 +17,18 @@ import 'package:cloverlotto/spinning/circlespin_binding.dart';
 import 'package:cloverlotto/spinning/circlespin_page.dart';
 import 'package:get/get.dart';
 
+import '../main/view/main_stspage.dart';
+
 class Constants {
   static final List<GetPage> APP_PAGES = [
     GetPage(
+      name: RouteNames.BOTTOM,
+      page: () => BottomNaviPage(),
+      binding: BottomNaviBinding(),
+    ),
+    GetPage(
       name: RouteNames.MAIN,
-      page: () => MainPage(),
+      page: () => MainPage2(),
       binding: MainBinding(),
     ),
     GetPage(

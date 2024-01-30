@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:cloverlotto/config/constants.dart';
+import 'package:cloverlotto/config/navi_page.dart';
 import 'package:cloverlotto/config/route_names.dart';
 import 'package:cloverlotto/main/view/main_page.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +34,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: RouteNames.MAIN,
+      initialRoute: RouteNames.BOTTOM,
       getPages: Constants.APP_PAGES,
+      // home: NaviPage() ,
     );
         },
     );
