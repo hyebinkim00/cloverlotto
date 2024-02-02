@@ -31,7 +31,7 @@ class BottomNaviPage extends GetView<BottomNaviController>{
         },
         children: [
           MainPage2(),
-          MainPage2(),
+          RandomPage(),
           MainPage2(),
           MainPage2()
         ],
@@ -49,8 +49,11 @@ class BottomNaviPage extends GetView<BottomNaviController>{
       //     );
       //   },
       // ),
+
+        //https://pub.dev/packages/circular_bottom_navigation
       bottomNavigationBar:
-        Obx(()=>     BottomNavigationBar(
+        Obx(()=>
+            BottomNavigationBar(
           currentIndex: controller.currentIndex.value,
           onTap:(index) {
             controller.changePage(index);
@@ -68,7 +71,20 @@ class BottomNaviPage extends GetView<BottomNaviController>{
               label: 'Random',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Container(
+                width: 32, // 아이콘 크기 조절
+                height: 32,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blue, // 원의 배경색
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.white, // 아이콘 색상
+                  ),
+                ),
+              ),
               label: 'Self',
             ),
             BottomNavigationBarItem(

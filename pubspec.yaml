@@ -45,8 +45,10 @@ dependencies:
   path: ^1.8.3
   fluttertoast: ^8.2.4
   flutter_fortune_wheel: ^1.3.0
-#  qr_code_scanner: ^1.0.1
-
+  random_text_reveal: ^0.0.7
+  animate_do: ^3.3.2
+  #  qr_code_scanner: ^1.0.1
+  curved_labeled_navigation_bar: ^2.0.2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

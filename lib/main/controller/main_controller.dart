@@ -1,21 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 import 'package:cloverlotto/model/loto.dart';
 import 'package:cloverlotto/retrofit/retrofit_client.dart';
 import 'package:cloverlotto/sqllite/db.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:html/parser.dart' as htmlParser;
 import 'package:cp949_codec/cp949_codec.dart';
+import 'package:random_text_reveal/random_text_reveal.dart';
 
 import '../../model/qrpage.dart';
 
 class MainController extends GetxController {
   // Rx<loto?> numbers = Rx<loto?>(loto()).obs;
   var s = 0.obs;
+  final GlobalKey<RandomTextRevealState> globalKey = GlobalKey();
 
   // RxInt 는 비동기 처리 하겟다는 뜻, obs 는 observer역할을 하겟다 뜻
   final numbers = Loto().obs;
@@ -25,6 +29,7 @@ class MainController extends GetxController {
   RxString kk = 's'.obs;
   RxInt lastSerial = 0.obs;
 
+  RxString  rxString = '[4,4,4,4,4,4]'.obs;
 
   @override
   void onInit() {
@@ -32,6 +37,28 @@ class MainController extends GetxController {
     super.onInit();
     print('dddddddddd');
     // getLastNo();
+  }
+
+  void sqte(){
+    globalKey.currentState?.play();
+  }
+
+
+  void random() {
+
+    Random random = Random();
+    List<int> randomNumbers = [];
+
+// 1부터 45까지의 숫자 중에서 랜덤으로 6개 선택
+    while (randomNumbers.length < 6) {
+      int randomNumber = random.nextInt(45) + 1;
+      randomNumbers.add(randomNumber);
+    }
+
+    rxString.value = randomNumbers.toString();
+
+    print('rrrrrrr${rxString}');
+
   }
 
   // 1. 마지막 회차 정보 가져오기
