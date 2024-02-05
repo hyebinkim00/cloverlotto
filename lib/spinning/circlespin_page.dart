@@ -136,10 +136,13 @@ void _showFortuneWheelDialog(bool frontFlag) {
             duration: const Duration(seconds: 3),
             items: frontFlag ? itemss : getItem(int.parse(controller.randomVl.value)),
             onAnimationEnd: () {
+
               if(frontFlag){
+
                 resultNum = nu[value].toString();
               } else {
-
+                nu = getList(int.parse(controller.randomVl.value));
+                resultNum = nu[value].toString();
               }
               print('Dialogss+${nu[value]}');
             },
@@ -168,6 +171,7 @@ void _showFortuneWheelDialog(bool frontFlag) {
       ],
     ),
   )).then((value) {
+    print('hhhhhhhhhhhhvalue${value}');
     if (frontFlag) {
       controller.randomVl.value = value;
     } else {
@@ -175,6 +179,18 @@ void _showFortuneWheelDialog(bool frontFlag) {
       controller.globalKey.currentState?.play();
     }
   });
+}
+
+List<int> getList(int value) {
+  if(value == 0){
+    return List.generate(8, (index) => index);
+  } else {
+    int list = 10;
+    if (value == 4) {
+      list = 5;
+    }
+    return List.generate(list, (index) => index);
+  }
 }
 
 getItem(int value) {
@@ -195,7 +211,7 @@ getItem(int value) {
           ));
     });
   } else  {
-    int list = 9;
+    int list = 10;
     if(value == 4){
       list = 5;
     }
@@ -219,6 +235,7 @@ getItem(int value) {
 
 int forRandom(int front) {
   if (front == 0) {
+
     return Fortune.randomInt(1, 9);
   } else if (front >= 1 && front <= 3) {
     return Fortune.randomInt(0, 9);

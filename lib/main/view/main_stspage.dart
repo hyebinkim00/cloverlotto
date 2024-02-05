@@ -49,7 +49,7 @@ class MainPage2 extends StatelessWidget{
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.play_arrow),
         onPressed: () {
-               Get.toNamed(RouteNames.RANDOM);
+               Get.toNamed(RouteNames.SPINNING);
 
           // MainController mainController = Get.find<MainController>();
           // mainController.sqte();
