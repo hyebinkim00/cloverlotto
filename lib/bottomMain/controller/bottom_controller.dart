@@ -19,7 +19,7 @@ import 'package:cp949_codec/cp949_codec.dart';
 import '../../model/qrpage.dart';
 
 class BottomNaviController extends GetxController {
-  RxInt currentIndex = 0.obs;
+  RxInt currentIndex = 3.obs;
   late PageController pageController;
 
   PageController get(){

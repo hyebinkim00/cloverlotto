@@ -1,5 +1,6 @@
 import 'package:cloverlotto/bottomMain/binding/bottomnavi_binding.dart';
 import 'package:cloverlotto/bottomMain/view/bottomnavi_page.dart';
+import 'package:cloverlotto/bottomMain/view/bottomnavi_stful.dart';
 import 'package:cloverlotto/config/route_names.dart';
 import 'package:cloverlotto/main/binding/main_binding.dart';
 import 'package:cloverlotto/main/view/main_page.dart';

@@ -128,17 +128,23 @@ void _showFortuneWheelDialog(bool frontFlag) {
     child: Column(
       children: [
         SizedBox(
-          width: 200,
-          height: 300,
+          width: 400,
+          height: 400,
           child: FortuneWheel(
+            indicators:  <FortuneIndicator>[
+              FortuneIndicator(
+                alignment: Alignment.topCenter, // <-- changing the position of the indicator
+                child: TriangleIndicator(
+                  color: Colors.yellow, // <-- changing the color of the indicator
+                ),
+              ),
+            ],
             selected: streamController.stream,
             animateFirst: false,
             duration: const Duration(seconds: 3),
             items: frontFlag ? itemss : getItem(int.parse(controller.randomVl.value)),
             onAnimationEnd: () {
-
               if(frontFlag){
-
                 resultNum = nu[value].toString();
               } else {
                 nu = getList(int.parse(controller.randomVl.value));
@@ -183,7 +189,7 @@ void _showFortuneWheelDialog(bool frontFlag) {
 
 List<int> getList(int value) {
   if(value == 0){
-    return List.generate(8, (index) => index);
+    return List.generate(8, (index) => index+1);
   } else {
     int list = 10;
     if (value == 4) {
@@ -198,9 +204,9 @@ getItem(int value) {
     return List.generate(8, (index) {
       return FortuneItem(
           style: FortuneItemStyle(
-              color: Colors.brown, textAlign: TextAlign.right, borderWidth: 2, borderColor: Colors.white),
+              color: Colors.blue, textAlign: TextAlign.right, borderWidth: 1, borderColor: Colors.white),
           child: Padding(
-            padding: const EdgeInsets.only(right: 20.0),
+            padding: const EdgeInsets.only(right: 50.0),
             child: Align(
               alignment: Alignment.centerRight,
               child: Transform.rotate(
@@ -218,9 +224,9 @@ getItem(int value) {
     return List.generate(list, (index) {
       return FortuneItem(
           style: FortuneItemStyle(
-              color: Colors.brown, textAlign: TextAlign.right, borderWidth: 2, borderColor: Colors.white),
+              color: Colors.blue, textAlign: TextAlign.right, borderWidth: 2, borderColor: Colors.white),
           child: Padding(
-            padding: const EdgeInsets.only(right: 20.0),
+            padding: const EdgeInsets.only(right: 50.0),
             child: Align(
               alignment: Alignment.centerRight,
               child: Transform.rotate(
@@ -252,9 +258,9 @@ class circleRan {
   static List<FortuneItem> frontNumsItems = List.generate(5, (index) {
     return FortuneItem(
         style: FortuneItemStyle(
-            color: Colors.brown, textAlign: TextAlign.right, borderWidth: 2, borderColor: Colors.white),
+            color: Colors.blue, textAlign: TextAlign.right, borderWidth: 2, borderColor: Colors.white),
         child: Padding(
-          padding: const EdgeInsets.only(right: 20.0),
+          padding: const EdgeInsets.only(right: 50.0),
           child: Align(
             alignment: Alignment.centerRight,
             child: Transform.rotate(
