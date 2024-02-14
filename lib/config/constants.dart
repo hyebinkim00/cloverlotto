@@ -4,6 +4,8 @@ import 'package:cloverlotto/bottomMain/view/bottomnavi_stful.dart';
 import 'package:cloverlotto/config/route_names.dart';
 import 'package:cloverlotto/main/binding/main_binding.dart';
 import 'package:cloverlotto/main/view/main_page.dart';
+import 'package:cloverlotto/mynum/binding/mynum_binding.dart';
+import 'package:cloverlotto/mynum/view/mynum_page.dart';
 import 'package:cloverlotto/mypage/binding/mypage_binding.dart';
 import 'package:cloverlotto/mypage/view/mypage_page.dart';
 import 'package:cloverlotto/random/binding/random_binding.dart';
@@ -49,8 +51,8 @@ class Constants {
     ),
     GetPage(
       name: RouteNames.MYPAGE,
-      page: () => MyPage(),
-      binding: MyPageBinding(),
+      page: () => MyNumPage(),
+      binding: MyNumBinding(),
     ),
     GetPage(
       name: RouteNames.RANDOM2,

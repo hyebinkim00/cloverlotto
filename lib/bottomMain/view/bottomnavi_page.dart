@@ -21,6 +21,10 @@ import '../../self/view/self_page.dart';
 
 class BottomNaviPage extends GetView<BottomNaviController> {
 
+  void changePage(){
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class BottomNaviPage extends GetView<BottomNaviController> {
           MainPage2(),
           RandomPage(),
           MainPage2(),
-          MainPage2()
+          MyPage()
         ],
       ),
       // body: Obx(

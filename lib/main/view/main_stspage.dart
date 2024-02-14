@@ -146,7 +146,12 @@ class MainPage2 extends StatelessWidget{
                               flex: 1,
                               child: ElevatedButton(
                                   onPressed: () {
-                                    Get.toNamed(RouteNames.SCAN);
+                                    Get.toNamed(RouteNames.MYPAGE);
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(builder: (context) => RandomPage()),
+                                    // );
+
                                     print('HBSHB');
                                   },
                                   child: Row(

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 
+import '../random2/controller/random2_controller.dart';
+
 class UtilDialog {
   // 제거 할 숫자 , 포함할 숫자
   static void selectNumbers(BuildContext context, bool range, List<int> origin, Function(List<int>) nums) {
@@ -63,7 +65,7 @@ class UtilDialog {
   
   
  static void getDi(BuildContext context) {
-   final RandomController randomController = Get.find<RandomController>();
+   final Random2Controller randomController = Get.find<Random2Controller>();
    List<int> orList = List.from(randomController.sel);
    showDialog(
       context: context,

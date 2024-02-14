@@ -1,3 +1,4 @@
+import 'package:cloverlotto/config/route_names.dart';
 import 'package:cloverlotto/model/qrpage.dart';
 import 'package:cloverlotto/mypage/controller/mypage_controller.dart';
 import 'package:flutter/foundation.dart';
@@ -7,208 +8,94 @@ import 'package:get/get.dart';
 
 import '../../model/selfnum.dart';
 
-class MyPage extends GetView<MyPageController> {
-
+class MyPage extends StatelessWidget {
   // 앱바에서 뒤로 버튼
   // 탭바로 직접입력 , QR스캔 분리
+  final List<String> cardText1 = ['저장기록', '구입번호 당첨확인', '랜덤번호 생성목록'];
+  final List<String> cardText2 = ['알림설정', '푸시알림 기록', '푸쉬알림 동의'];
+  final List<String> cardText3 = ['도움말', '앱 사용방법', '로또 당첨금 규칙'];
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          leading: BackButtonIcon(),
-          title: Text('저장 목록'),
-        ),
-        body:
-        Column(
-          children: [
-            // 회차 선택
-            TabBar(tabs: [Tab(text: '직접입력'),Tab(text:'QR스캔')],
-            controller: controller.tabController,
-            indicatorColor: Colors.deepOrangeAccent,
-            padding: EdgeInsets.all(10),
-            labelColor: Colors.black,
-            // indicator: BoxDecoration(borderRadius: BorderRadius.circular(30),color: Color(
-            //     0xffffa228)),
-            unselectedLabelColor: Colors.grey,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-              IconButton(onPressed: (){}, icon: Icon(Icons.arrow_circle_left)),
-              Text('1102회', style: TextStyle(fontSize: 20),),
-              IconButton(onPressed: (){}, icon: Icon(Icons.arrow_circle_right))
-            ],),
-            Expanded(
-              child: TabBarView(
-                controller: controller.tabController,
-                  children: tabList()),
-            )
+    List<String> combinedItems = [];
 
+    // 리스트들을 하나로 합침
+    combinedItems.addAll(cardText1);
+    combinedItems.addAll(cardText2);
+    combinedItems.addAll(cardText3);
+
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              height: 200,
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [Text('반갑습니다!'), Text('이번주 로또 추첨은 ' ' 일 입니다.')],
+              ),
+            ),
+            Expanded(
+              child: ScrollConfiguration(
+                behavior: ScrollBehavior().copyWith(overscroll: false),
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    if (index == 0 ||
+                        index == cardText1.length ||
+                        index == cardText1.length + cardText2.length) {
+                      return Column(
+                        children: [
+                          ListTile(
+                            title: Text(
+                              combinedItems[index],
+                              style: TextStyle(fontSize: 30), // 텍스트 크기 30으로 설정
+                            ),
+                            onTap: (){performAction(index);},
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Divider(
+                              thickness: 3,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+
+                    // 나머지 경우는 구분선을 추가하지 않고 각 항목을 반환
+                    Color color = (index % 2 == 0) ? Colors.blue : Colors.green;
+                    return Column(
+                        //  color: color,
+                        children: [
+                          ListTile(
+                            title: Text(combinedItems[index]),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Divider(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ]);
+                  },
+                  itemCount: combinedItems.length,
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 
-
-  List<Widget> tabList (){
-    return [
-      Center(
-        child:  Container(
-          child: Obx(()=>
-              ListView.builder(
-                itemCount: controller.dblist.length, // 예제로 5개의 항목을 만듭니다.
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.all(10),
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey,width: 1.0)
-                    ),
-                    height: 150, // 각 항목의 높이를 설정합니다.
-                    child: Column(
-                      children: [
-                        Text('${controller.dblist[index].serial}'),
-                        FutureBuilder(
-                            future: controller.getResults(controller.dblist[index]),
-                            builder: (context,snapshot){
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                // return CircularProgressIndicator();// 데이터를 기다리는 동안 로딩 인디케이터를 표시합니다.
-                                return Container(color: Colors.transparent,);
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (!snapshot.hasData) {
-                                return Text('No data available'); // 데이터가 없는 경우에 대한 처리를 추가합니다.
-                              }
-                              else if (snapshot.data != null && snapshot.hasData) {
-                                controller.ballList.value = snapshot.data!;
-                              }
-                              return Container(
-                                width: 200.0,
-                                height: 50.0,
-                                child: ListView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.horizontal, // 가로 방향으로 스크롤합니다.
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder: (BuildContext context , int indexs){
-                                    return Container(
-                                      width: 30.0,
-                                      height: 50.0,
-                                      margin: EdgeInsets.only(left: 5, right: 5),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: snapshot.data![indexs].color,
-                                      ),
-                                      child: Center(
-                                          child: Text(
-                                            '${snapshot.data![indexs].number}',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              // 텍스트 색상 설정
-                                              fontSize: 24.0, // 텍스트 크기 설정
-                                            ),
-                                          )),
-                                    );
-                                  },
-                                ),
-                              );
-                            }),
-                      ],
-                    ),
-                  );
-                },
-              )),
-        ),
-      ),
-      // QR 은 한 회차에 여려개 번호 리스트
-      Center(
-        child:  Container(
-          child: Obx(()=>
-        // DB 에 저장되어 있는 QR정보들 리스트
-              ListView.builder(
-                itemCount: controller.qrtest.length, // 예제로 5개의 항목을 만듭니다.
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.all(10),
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey,width: 1.0)
-                    ),
-                    height: 150, // 각 항목의 높이를 설정합니다.
-                    // 정보 한개씩 박스 안에 표시
-                    child: Column(
-                      children: [
-                        Text('${controller.qrtest[index].myNum??[]}'),
-                        FutureBuilder(
-                          // controller.qrtest 안에 serial , List<QRInfo> 리스트 (DB 리스트)
-                            future: controller.getTEST(1102,controller.qrtest[index].myNum??[]),
-                            builder: (context,snapshot){
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                // return CircularProgressIndicator();// 데이터를 기다리는 동안 로딩 인디케이터를 표시합니다.
-                                return Container(color: Colors.transparent,);
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (!snapshot.hasData) {
-                                return Text('No data available'); // 데이터가 없는 경우에 대한 처리를 추가합니다.
-                              }
-                              else if (snapshot.data != null && snapshot.hasData) {
-                                print('SSSSBBB${snapshot.data}');
-                                //
-                                controller.QRballLists.value = snapshot.data!;
-                              }
-                              return Expanded(
-                                // 세로 리스트 ( NumInfo 갯수)
-                                child: ListView.builder(
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return  Container(
-                                      width: 200.0,
-                                      height: 50.0,
-                                      child: ListView.builder(
-                                        physics: NeverScrollableScrollPhysics(),
-                                        scrollDirection: Axis.horizontal, // 가로 방향으로 스크롤합니다.
-                                        itemCount: snapshot.data![index].length,
-                                        itemBuilder: (BuildContext context , int indexs){
-                                          return Container(
-                                            width: 30.0,
-                                            height: 50.0,
-                                            margin: EdgeInsets.only(left: 5, right: 5),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: snapshot.data![index][indexs].color,
-                                            ),
-                                            child: Center(
-                                                child: Text(
-                                                  '${snapshot.data![index][indexs].number}',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    // 텍스트 색상 설정
-                                                    fontSize: 24.0, // 텍스트 크기 설정
-                                                  ),
-                                                )),
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            }),
-                      ],
-                    ),
-                  );
-                },
-              )),
-        ),
-      )
-    ];
+  void performAction(int index) {
+    // 각 항목에 대한 특정 기능을 수행합니다.
+    print('Performing action for $index');
+    if (index == 0) {
+      Get.toNamed(RouteNames.MYPAGE);
+    }
+    // 여기에 각 항목에 대한 특정 기능을 추가할 수 있습니다.
+    // 예를 들어, 해당 항목에 대한 화면 이동 또는 다른 작업을 수행할 수 있습니다.
   }
-
-
-
-
-
-  }
-
+}

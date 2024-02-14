@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class Random2Controller extends GetxController{
 
   RxBool isSwitched = false.obs;
-
+  RxList<int> sel = <int>[].obs;
   RxString inNum = ''.obs;
   RxInt inNumber = 0.obs;
   RxList<List<int>> allRandomNumbers = <List<int>>[].obs;

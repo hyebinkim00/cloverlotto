@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 import '../controller/random2_controller.dart';
 
 class Random2Page extends GetView<Random2Controller> {
-  // 번호추첨 -> 제외 하고 싶은 숫자 , 포함하고 싶은 숫자  , ---> 여섯개 숫자 랜덤 리스트 10개 == > 생성된 번호 저장 가능
+  // 번호추첨 -> 제외 하고 싶은 숫자 , 포함하고 싶은 숫자
+  //, ---> 여섯개 숫자 랜덤 리스트 10개 == > 생성된 번호 저장 가능
   TextEditingController _controller = TextEditingController();
   bool press = true;
   List<int> ss = [];
@@ -26,12 +27,14 @@ class Random2Page extends GetView<Random2Controller> {
               child: TextButton(
                   onPressed: () {
                     // _showNumberInputDialog(context);
-                    UtilDialog.selectNumbers(context, false,ss,(select){
-                      print('Dioalog ${select}');
-                    } );
+                    // UtilDialog.selectNumbers(context, false,ss,(select){
+                    //   print('Dioalog ${select}');
+                    // } );
+                    UtilDialog.getDi(context);
                   },
                   child: Text('제거할 숫자')),
             ),
+            Obx(() => Text('SSS__${controller.sel.value}')),
             Obx(
               () => Row(
                 children: [Text('${controller.inNum}')],
