@@ -1,10 +1,15 @@
 import 'package:cloverlotto/model/selfnum.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import '../../model/loto.dart';
 import '../../sqllite/db.dart';
 
 class SelfController extends GetxController {
+  RxList<Widget> widgets = <Widget>[].obs;
+  RxList<RxList<bool>> isSelectedLists = <RxList<bool>>[].obs; // 위젯마다 isSelected 목록을 저장할 RxList
+
   RxList<int> selectList = <int>[].obs;
   RxList<bool> isSelected = List.generate(45, (index) => false).obs;
   // RxInt serial = 0.obs;
@@ -13,6 +18,8 @@ class SelfController extends GetxController {
   void onInit() {
     // var last = Get.arguments['lastSerial'];
     // serial.value = last;
+    widgets = <Widget>[items(0)].obs;
+    isSelectedLists.add(List.generate(45, (index) => false).obs); // 새로운 위젯에 대한 isSelected 목록을 추가
     super.onInit();
   }
   // 눌린 수 -> selectList 에 없으면 저장 있으면 제거
@@ -38,6 +45,59 @@ class SelfController extends GetxController {
     //오름차순 정리
     selectList.sort();
   }
+
+  void addWidget() {
+    widgets.add(items(widgets.length));
+    isSelectedLists.add(List.generate(45, (index) => false).obs); // 새로운 위젯에 대한 isSelected 목록을 추가
+
+  }
+
+  void toggleSelection(int widgetIndex, int gridIndex) {
+    isSelectedLists[widgetIndex][gridIndex] = !isSelectedLists[widgetIndex][gridIndex];
+  }
+
+
+   Widget items(int index) {
+    return
+      Container(
+        height: 400,
+      width: 300, // 각 항목의 너비
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: GridView.builder(
+              shrinkWrap: true, // GridView가 자신의 크기에 맞춰야 함
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 0.5,
+                  crossAxisSpacing: 10, // 가로 간격을 조절하세요.
+                  mainAxisSpacing: 4, // 세로 간격을 조절하세요.
+                  crossAxisCount: 7),
+              itemCount: 45, // GridView에 표시할 항목 수
+              itemBuilder: (context, gridIndex) {
+                return GestureDetector(
+                  onTap: (){
+                    print('ListView 아이템 ${index}에서 Grid item $gridIndex 클릭됨');
+                    toggleSelection(index,gridIndex);
+                  },
+                  child:
+                  Obx(()=>
+                      Container(
+                    margin: EdgeInsets.all(4),
+                        color: isSelectedLists[index][gridIndex] ? Colors.black : Colors.yellow,
+                    child: Center(
+                      child: Text('$gridIndex'),
+                    ),
+                  ),)
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
 
 
 

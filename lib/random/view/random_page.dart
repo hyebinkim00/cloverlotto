@@ -20,102 +20,135 @@ class RandomPage extends StatelessWidget {
       body: GetBuilder<RandomController>(
         init: RandomController(),
         builder: (controller) {
-          return Container(
-            height: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                 Container(
-                    child: TextButton(
-                        onPressed: () {
-                          // _showNumberInputDialog(context);
-                          UtilDialog.getDi(context);
-                          // UtilDialog.selectNumbers(context, false,controller.sel.value,(select){
-                          //   print('selelel+_${select}');
-                          //   controller.onSele(select);
-                          // } );
-                        },
-                        child: Text('제거할 숫자')),
+          return SafeArea(
+            top: true,
+            child: Container(
+              height: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('로또 번호를 만들어 드릴께요! \n포함하고 싶은 숫자와 제외하고 싶은 숫자를 선택해 주세요.',style : TextStyle(fontSize:20,fontWeight: FontWeight.bold),textAlign: TextAlign.center),
 
-                  ),
-                Obx(() => Text('SSS__${controller.s.value}'),),
-                Obx(() => Text('SSS__${controller.sel.value}')),
-                // Obx(
-                //   () => ListView.builder(
-                //     shrinkWrap: true,
-                //     itemCount: controller.allRandomNumbers.length,
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return Center(
-                //         child: Text('${controller.allRandomNumbers[index]}'),
-                //       );
-                //     },
-                //   ),
-                // ),
-                TextButton(
-                    onPressed: () {
-                      press = !press;
-                      controller.create_list();
-                      controller.onTap();
-                    },
-                    child: Text('번호 생성하기'))
-                ,
-                // Obx(() => AnimatedSwitcher(
-                //     duration: Duration(milliseconds: 1000),
-                //   child: createBox(controller.isSwitched.value),
-                //   transitionBuilder : (Widget child, Animation<double> animation) {
-                //     return FadeTransition(
-                //       opacity: animation,
-                //       child: child,
-                //     );
-                //   },
-                // )),
-                Obx(() => TweenAnimationBuilder(
-                  duration: Duration(milliseconds: 2000),
-                  curve: Curves.easeInOut, // 추가된 부분
-                  tween: Tween<double>(begin: 0, end: controller.angle.value),
-                  onEnd: (){controller.onTap3();} ,
-                  builder: (BuildContext con, double val, child) {
-                    return Transform(
-                        alignment: Alignment.center,
-                      // alignment: FractionalOffset.center,
-                      transform:Matrix4.identity()
-                        ..setEntry(3, 2, 0.002) // 원근 효과
-                        ..rotateY(val * (3.14 / 180)),
-                      child: Container(width: 100, height: 100,
-                        decoration:BoxDecoration(
-                          color: controller.isBack.value ? Colors.black: Colors.yellowAccent,
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)
-                          ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.blue, // 테두리 색상
+                          width: 2, // 테두리 두께
                         ),
-                        child: (Center(child:Text(controller.isBack.value?'Front':'Back'))),
                       ),
-                    );
-                  },
-                )),
-                // 이걸 써야겟다 ( 눌렀을때 번호 공개)
-                Obx(() => GestureDetector(
-                  onTap: (){controller.onTap2();},
-                  child: AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                    transform: Matrix4.rotationY(controller.angle.value * (3.1415927 / 180)),
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: controller.backgroundColor.value,
-                      shape: BoxShape.circle,
+                      child:
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('포함 하고 싶은 숫자'),
+                          Row(
+                            children: [
+                              Text('data', style : TextStyle(fontSize:10,fontWeight: FontWeight.bold)),
+                              TextButton(
+                                  onPressed: () {
+                                    // _showNumberInputDialog(context);
+                                    UtilDialog.getDi(context);
+                                    // UtilDialog.selectNumbers(context, false,controller.sel.value,(select){
+                                    //   print('selelel+_${select}');
+                                    //   controller.onSele(select);
+                                    // } );
+                                  },
+                                  child: Text('초기화')),
+                              TextButton(
+                                  onPressed: () {
+                                    // _showNumberInputDialog(context);
+                                    UtilDialog.getDi(context);
+                                    // UtilDialog.selectNumbers(context, false,controller.sel.value,(select){
+                                    //   print('selelel+_${select}');
+                                    //   controller.onSele(select);
+                                    // } );
+                                  },
+                                  child: Text('추가')),
+                            ],
+                          ),
+                        ],
+                      ),
+
                     ),
-                    child: Center(
-                      child: Text(
-                        controller.isBack.value ? '' : 'Front',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),),
-                ))
+                  Obx(() => Text('SSS__${controller.s.value}'),),
+                  Obx(() => Text('SSS__${controller.sel.value}')),
+                  // Obx(
+                  //   () => ListView.builder(
+                  //     shrinkWrap: true,
+                  //     itemCount: controller.allRandomNumbers.length,
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return Center(
+                  //         child: Text('${controller.allRandomNumbers[index]}'),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+                  TextButton(
+                      onPressed: () {
+                        press = !press;
+                        controller.create_list();
+                        controller.onTap();
+                      },
+                      child: Text('번호 생성하기'))
+                  ,
+                  // Obx(() => AnimatedSwitcher(
+                  //     duration: Duration(milliseconds: 1000),
+                  //   child: createBox(controller.isSwitched.value),
+                  //   transitionBuilder : (Widget child, Animation<double> animation) {
+                  //     return FadeTransition(
+                  //       opacity: animation,
+                  //       child: child,
+                  //     );
+                  //   },
+                  // )),
+                  // Obx(() => TweenAnimationBuilder(
+                  //   duration: Duration(milliseconds: 2000),
+                  //   curve: Curves.easeInOut, // 추가된 부분
+                  //   tween: Tween<double>(begin: 0, end: controller.angle.value),
+                  //   onEnd: (){controller.onTap3();} ,
+                  //   builder: (BuildContext con, double val, child) {
+                  //     return Transform(
+                  //         alignment: Alignment.center,
+                  //       // alignment: FractionalOffset.center,
+                  //       transform:Matrix4.identity()
+                  //         ..setEntry(3, 2, 0.002) // 원근 효과
+                  //         ..rotateY(val * (3.14 / 180)),
+                  //       child: Container(width: 100, height: 100,
+                  //         decoration:BoxDecoration(
+                  //           color: controller.isBack.value ? Colors.black: Colors.yellowAccent,
+                  //           borderRadius: BorderRadius.all(Radius.circular(10.0)
+                  //           ),
+                  //         ),
+                  //         child: (Center(child:Text(controller.isBack.value?'Front':'Back'))),
+                  //       ),
+                  //     );
+                  //   },
+                  // )),
+                  // // 이걸 써야겟다 ( 눌렀을때 번호 공개)
+                  // Obx(() => GestureDetector(
+                  //   onTap: (){controller.onTap2();},
+                  //   child: AnimatedContainer(
+                  //     duration: Duration(milliseconds: 500),
+                  //     curve: Curves.easeInOut,
+                  //     transform: Matrix4.rotationY(controller.angle.value * (3.1415927 / 180)),
+                  //     width: 100,
+                  //     height: 100,
+                  //     decoration: BoxDecoration(
+                  //       color: controller.backgroundColor.value,
+                  //       shape: BoxShape.circle,
+                  //     ),
+                  //     child: Center(
+                  //       child: Text(
+                  //         controller.isBack.value ? '' : 'Front',
+                  //         style: TextStyle(color: Colors.white),
+                  //       ),
+                  //     ),),
+                  // ))
 
-              ],
+                ],
+              ),
+
             ),
-
           );
         }
       ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:animate_do/animate_do.dart';
@@ -13,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:random_text_reveal/random_text_reveal.dart';
+import 'package:wheel_picker/wheel_picker.dart';
 
 import '../../config/route_names.dart';
 
@@ -45,12 +47,18 @@ class MainPage2 extends StatelessWidget{
   // Main -> 당첨번호 확인 (QR / 직접입력) , 번호추천 (랜덤  , MBTI , 운세) , 기록 (당첨확인 목록, 번호추천 목록)
   @override
   Widget build(BuildContext context) {
+    final secondsWheel = WheelPickerController(itemCount: 10);
+    const textStyle = TextStyle(fontSize: 32.0, height: 1.5);
+    FixedExtentScrollController _scrollController = FixedExtentScrollController(initialItem: 0);
+    final ScrollController scrollController = ScrollController();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.play_arrow),
         onPressed: () {
-               Get.toNamed(RouteNames.SPINNING);
+          // _scrollController.animateTo(100*3, duration: Duration(milliseconds: 1000), curve: Curves.ease);
 
+          Get.toNamed(RouteNames.SPINNING);
           // MainController mainController = Get.find<MainController>();
           // mainController.sqte();
         },
@@ -129,9 +137,11 @@ class MainPage2 extends StatelessWidget{
                               flex: 1,
                               child: ElevatedButton(
                                   onPressed: () {
-                                    Get.toNamed(RouteNames.SELF, arguments: {
-                                      'lastSerial': controller.lastSerial
-                                    });
+                                    // Timer.periodic(const Duration(seconds: 1), (_) => secondsWheel.shiftBy(steps: 4));
+
+                                    // Get.toNamed(RouteNames.SELF, arguments: {
+                                    //   'lastSerial': controller.lastSerial
+                                    // });
                                   },
                                   child: Row(
                                     mainAxisAlignment:
@@ -168,7 +178,40 @@ class MainPage2 extends StatelessWidget{
                         ],
                       ),
                     ),
+                    Container(
+                      height: 300,
+                      child: ListWheelScrollView.useDelegate(
+                        controller:  _scrollController,
+                        itemExtent: 100,
+                        offAxisFraction: 0.0,
+                        // diameterRatio: 1.5,
+                        physics: const FixedExtentScrollPhysics(),
+                        onSelectedItemChanged: (index){
+                          print('Index Change!! +${(index % 10)}');
+                        },
+                        childDelegate:ListWheelChildLoopingListDelegate(
+                            children: <Widget>[
+                              for (int i = 1; i <= 10; i++)
+                                Container(
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF319964),
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Center(
+                                    child: Text('Item ${i}',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 50.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ]
+                        ),),
 
+                    ),
                     SizedBox(
                       width: 200,
                       height: 50,
