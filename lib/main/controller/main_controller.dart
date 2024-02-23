@@ -186,6 +186,9 @@ class MainController extends GetxController {
     } catch (e) {}
   }
 
+
+  // 여러개 저장 픽스
+
   void qrTest() async {
     List<NumInfo> n = [];
 

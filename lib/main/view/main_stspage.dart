@@ -139,9 +139,9 @@ class MainPage2 extends StatelessWidget{
                                   onPressed: () {
                                     // Timer.periodic(const Duration(seconds: 1), (_) => secondsWheel.shiftBy(steps: 4));
 
-                                    // Get.toNamed(RouteNames.SELF, arguments: {
-                                    //   'lastSerial': controller.lastSerial
-                                    // });
+                                    Get.toNamed(RouteNames.SELF, arguments: {
+                                      'lastSerial': controller.lastSerial
+                                    });
                                   },
                                   child: Row(
                                     mainAxisAlignment:
@@ -156,7 +156,8 @@ class MainPage2 extends StatelessWidget{
                               flex: 1,
                               child: ElevatedButton(
                                   onPressed: () {
-                                    Get.toNamed(RouteNames.MYPAGE);
+                                    controller.qrTest();
+
                                     // Navigator.push(
                                     //   context,
                                     //   MaterialPageRoute(builder: (context) => RandomPage()),

@@ -18,133 +18,28 @@ class SelfPage extends GetView<SelfController> {
           width: double.infinity, // 전체 화면을 채우도록 설정
           height: MediaQuery.of(context).size.height,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+
+              // 사용자가 추가하게 하려고 햇는데 한번에 보여주는 걸로 바꿔함
+              // 핸드폰 화면 크기마다 다르ㄴ게 나오는거 고치기
+              // Widget Controller에서 빼기
+
               Obx(
                 () => Container(
-                  height: 600,
+                  // height: MediaQuery.of(context).size.height * 0.8, // 화면 높이에 맞게 동적으로 설정
+                  height: 650,
                   width: 400,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: controller.widgets.length,
+                   // itemCount: controller.widgets.length,
+                    itemCount: 5,
                     itemBuilder: (context, index) {
                       return controller.widgets[index];
                     },
                   ),
                 ),
               ),
-              //회차 선택
-              // Column(
-              //   children: [
-              //     Container(
-              //       margin: EdgeInsets.only(left: 10, right: 10),
-              //       padding: EdgeInsets.all(20),
-              //       color: Colors.deepOrangeAccent,
-              //       child: Row(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Text(
-              //             '제 ${Get.arguments['lastSerial']}회',
-              //             style: const TextStyle(
-              //                 color: Colors.white,
-              //                 fontSize: 20,
-              //                 fontWeight: FontWeight.bold),
-              //           ),
-              //           // OutlinedButton(
-              //           //     onPressed: () {
-              //           //       showOptionDialog(context);
-              //           //     },
-              //           //     child: Text('회차변경'))
-              //         ],
-              //       ),
-              //     ),
-              //     // Obx(() => TextButton(
-              //     //       onPressed: () {
-              //     //         showOptionDialog(context);
-              //     //       },
-              //     //       style: ButtonStyle(
-              //     //           backgroundColor:
-              //     //               MaterialStateProperty.all<Color>(Colors.orange),
-              //     //           foregroundColor:
-              //     //               MaterialStateProperty.all<Color>(Colors.white)),
-              //     //       // MainController에서 최신 회차를 가져옴
-              //     //       // 초기 값을 '회차 선택'으로 바꿔야하나 고민
-              //     //       child: Text('제 ${Get.arguments['lastSerial']}회'),
-              //     //     )),
-              //     Expanded(
-              //       child: GridView.builder(
-              //         padding: EdgeInsets.all(10),
-              //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //             childAspectRatio: 0.5,
-              //             crossAxisSpacing: 10, // 가로 간격을 조절하세요.
-              //             mainAxisSpacing: 4, // 세로 간격을 조절하세요.
-              //             crossAxisCount: 7),
-              //         itemCount: 45,
-              //         shrinkWrap: true,
-              //         physics: NeverScrollableScrollPhysics(),
-              //         itemBuilder: (context, index) {
-              //           return GestureDetector(
-              //             onTap: () {
-              //               controller.selected(index);
-              //             },
-              //             child: Obx(
-              //               () => SizedBox(
-              //                 height: 100,
-              //                 child: Column(
-              //                   children: [
-              //                     Container(
-              //                         decoration: BoxDecoration(
-              //                             border: Border(
-              //                                 top: BorderSide(
-              //                                     color: Colors.orangeAccent),
-              //                                 left: BorderSide(
-              //                                     color: Colors.orangeAccent),
-              //                                 right: BorderSide(
-              //                                     color: Colors.orangeAccent)),
-              //                             color: controller.isSelected[index]
-              //                                 ? Colors.black45
-              //                                 : Colors.white),
-              //                         height: 20),
-              //                     Container(
-              //                         decoration: BoxDecoration(
-              //                             border: Border(
-              //                                 top: BorderSide(
-              //                                     color: Colors.transparent),
-              //                                 bottom: BorderSide(
-              //                                     color: Colors.transparent),
-              //                                 left: BorderSide(
-              //                                     color: Colors.white),
-              //                                 right: BorderSide(
-              //                                     color: Colors.white)),
-              //                             color: controller.isSelected[index]
-              //                                 ? Colors.black45
-              //                                 : Colors.white),
-              //                         child: Center(
-              //                           child: Text('${index + 1}'),
-              //                         ),
-              //                         height: 20),
-              //                     Container(
-              //                         decoration: BoxDecoration(
-              //                             border: Border(
-              //                                 bottom: BorderSide(
-              //                                     color: Colors.orangeAccent),
-              //                                 left: BorderSide(
-              //                                     color: Colors.orangeAccent),
-              //                                 right: BorderSide(
-              //                                     color: Colors.orangeAccent)),
-              //                             color: controller.isSelected[index]
-              //                                 ? Colors.black45
-              //                                 : Colors.white),
-              //                         height: 20),
-              //                   ],
-              //                 ),
-              //               ),
-              //             ),
-              //           );
-              //         },
-              //       ),
-              //     ),
-              //   ],
-              // ),
               TextButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
@@ -153,7 +48,7 @@ class SelfPage extends GetView<SelfController> {
                   ),
                   onPressed: () {
                     // controller.saveList();
-                    controller.addWidget();
+                    controller.listCon();
                     //      Get.toNamed(RouteNames.MYPAGE);
                   },
                   child: Text('확인하기')),
